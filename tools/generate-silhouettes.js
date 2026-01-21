@@ -43,10 +43,11 @@ async function processImage(inputPath, outputPath) {
 
   try {
     // Step 1: Load and preprocess image with sharp
-    // - Remove background (make transparent areas)
+    // - Resize to reasonable size for tracing (smaller = simpler SVG)
     // - Convert to grayscale
     // - Apply threshold to create binary image
     const processedBuffer = await sharp(inputPath)
+      .resize(400, 400, { fit: 'inside', withoutEnlargement: true })
       .grayscale()
       .normalize()
       .threshold(128)
@@ -54,12 +55,14 @@ async function processImage(inputPath, outputPath) {
       .toBuffer();
 
     // Step 2: Trace the image to create SVG
+    // Using higher turdSize and optTolerance for simpler, smaller SVGs
     return new Promise((resolve, reject) => {
       potrace.trace(processedBuffer, {
         color: '#1a1a2e',
         threshold: 128,
-        turdSize: 100,
-        optTolerance: 0.4
+        turdSize: 500,      // Ignore small details
+        optTolerance: 1.5,  // Simplify curves more
+        alphaMax: 1.0       // Smoother corners
       }, (err, svg) => {
         if (err) {
           reject(err);
