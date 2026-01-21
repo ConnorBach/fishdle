@@ -258,5 +258,1838 @@
     },
     "silhouette": "images/silhouettes/ocean-sunfish.svg",
     "difficulty": "hard"
+  },
+  {
+    "id": "yellowfin-tuna",
+    "name": "Yellowfin Tuna",
+    "scientificName": "Thunnus albacares",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Scombridae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/yellowfin-tuna.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sockeye-salmon",
+    "name": "Sockeye Salmon",
+    "scientificName": "Oncorhynchus nerka",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/sockeye-salmon.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "chinook-salmon",
+    "name": "Chinook Salmon",
+    "scientificName": "Oncorhynchus tshawytscha",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "large",
+      "family": "Salmonidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/chinook-salmon.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "coho-salmon",
+    "name": "Coho Salmon",
+    "scientificName": "Oncorhynchus kisutch",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/coho-salmon.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pink-salmon",
+    "name": "Pink Salmon",
+    "scientificName": "Oncorhynchus gorbuscha",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/pink-salmon.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "brown-trout",
+    "name": "Brown Trout",
+    "scientificName": "Salmo trutta",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/brown-trout.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "brook-trout",
+    "name": "Brook Trout",
+    "scientificName": "Salvelinus fontinalis",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Salmonidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/brook-trout.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "lake-trout",
+    "name": "Lake Trout",
+    "scientificName": "Salvelinus namaycush",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Salmonidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/lake-trout.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "smallmouth-bass",
+    "name": "Smallmouth Bass",
+    "scientificName": "Micropterus dolomieu",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Centrarchidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/smallmouth-bass.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "striped-bass",
+    "name": "Striped Bass",
+    "scientificName": "Morone saxatilis",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "large",
+      "family": "Moronidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/striped-bass.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sea-bass",
+    "name": "Sea Bass",
+    "scientificName": "Centropristis striata",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Serranidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/sea-bass.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "walleye",
+    "name": "Walleye",
+    "scientificName": "Sander vitreus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Percidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/walleye.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "european-perch",
+    "name": "European Perch",
+    "scientificName": "Perca fluviatilis",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Percidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/european-perch.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "common-carp",
+    "name": "Common Carp",
+    "scientificName": "Cyprinus carpio",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/common-carp.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "koi",
+    "name": "Koi",
+    "scientificName": "Cyprinus rubrofuscus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/koi.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "bluegill",
+    "name": "Bluegill",
+    "scientificName": "Lepomis macrochirus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Centrarchidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/bluegill.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "crappie",
+    "name": "Crappie",
+    "scientificName": "Pomoxis nigromaculatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Centrarchidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/crappie.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "muskellunge",
+    "name": "Muskellunge",
+    "scientificName": "Esox masquinongy",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Esocidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/muskellunge.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "tiger-shark",
+    "name": "Tiger Shark",
+    "scientificName": "Galeocerdo cuvier",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Carcharhinidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/tiger-shark.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "bull-shark",
+    "name": "Bull Shark",
+    "scientificName": "Carcharhinus leucas",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "large",
+      "family": "Carcharhinidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/bull-shark.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "whale-shark",
+    "name": "Whale Shark",
+    "scientificName": "Rhincodon typus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Rhincodontidae",
+      "region": "Indian"
+    },
+    "silhouette": "images/silhouettes/whale-shark.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "nurse-shark",
+    "name": "Nurse Shark",
+    "scientificName": "Ginglymostoma cirratum",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Ginglymostomatidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/nurse-shark.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "blacktip-shark",
+    "name": "Blacktip Shark",
+    "scientificName": "Carcharhinus limbatus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Carcharhinidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/blacktip-shark.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "thresher-shark",
+    "name": "Thresher Shark",
+    "scientificName": "Alopias vulpinus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Alopiidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/thresher-shark.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "mako-shark",
+    "name": "Mako Shark",
+    "scientificName": "Isurus oxyrinchus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Lamnidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/mako-shark.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "blue-shark",
+    "name": "Blue Shark",
+    "scientificName": "Prionace glauca",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Carcharhinidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/blue-shark.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "lemon-shark",
+    "name": "Lemon Shark",
+    "scientificName": "Negaprion brevirostris",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Carcharhinidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/lemon-shark.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "stingray",
+    "name": "Stingray",
+    "scientificName": "Dasyatis americana",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Dasyatidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/stingray.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "electric-ray",
+    "name": "Electric Ray",
+    "scientificName": "Torpedo californica",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Torpedinidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/electric-ray.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "skate",
+    "name": "Skate",
+    "scientificName": "Raja binoculata",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Rajidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/skate.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "barracuda",
+    "name": "Barracuda",
+    "scientificName": "Sphyraena barracuda",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Sphyraenidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/barracuda.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "wahoo",
+    "name": "Wahoo",
+    "scientificName": "Acanthocybium solandri",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Scombridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/wahoo.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "mahi-mahi",
+    "name": "Mahi-Mahi",
+    "scientificName": "Coryphaena hippurus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Coryphaenidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/mahi-mahi.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "sailfish",
+    "name": "Sailfish",
+    "scientificName": "Istiophorus platypterus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Istiophoridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/sailfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "tarpon",
+    "name": "Tarpon",
+    "scientificName": "Megalops atlanticus",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "giant",
+      "family": "Megalopidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/tarpon.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "bonefish",
+    "name": "Bonefish",
+    "scientificName": "Albula vulpes",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Albulidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/bonefish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "permit",
+    "name": "Permit",
+    "scientificName": "Trachinotus falcatus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Carangidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/permit.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "red-snapper",
+    "name": "Red Snapper",
+    "scientificName": "Lutjanus campechanus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Lutjanidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/red-snapper.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "yellowtail-snapper",
+    "name": "Yellowtail Snapper",
+    "scientificName": "Ocyurus chrysurus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Lutjanidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/yellowtail-snapper.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "grouper",
+    "name": "Grouper",
+    "scientificName": "Epinephelus morio",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Serranidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/grouper.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "goliath-grouper",
+    "name": "Goliath Grouper",
+    "scientificName": "Epinephelus itajara",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Serranidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/goliath-grouper.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "red-drum",
+    "name": "Red Drum",
+    "scientificName": "Sciaenops ocellatus",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "large",
+      "family": "Sciaenidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/red-drum.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "black-drum",
+    "name": "Black Drum",
+    "scientificName": "Pogonias cromis",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "large",
+      "family": "Sciaenidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/black-drum.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "spotted-seatrout",
+    "name": "Spotted Seatrout",
+    "scientificName": "Cynoscion nebulosus",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "medium",
+      "family": "Sciaenidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/spotted-seatrout.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "cobia",
+    "name": "Cobia",
+    "scientificName": "Rachycentron canadum",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Rachycentridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/cobia.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pompano",
+    "name": "Pompano",
+    "scientificName": "Trachinotus carolinus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Carangidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/pompano.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "jack-crevalle",
+    "name": "Jack Crevalle",
+    "scientificName": "Caranx hippos",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Carangidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/jack-crevalle.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "amberjack",
+    "name": "Amberjack",
+    "scientificName": "Seriola dumerili",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Carangidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/amberjack.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "bluefish",
+    "name": "Bluefish",
+    "scientificName": "Pomatomus saltatrix",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Pomatomidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/bluefish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "mackerel",
+    "name": "Mackerel",
+    "scientificName": "Scomber scombrus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Scombridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/mackerel.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "king-mackerel",
+    "name": "King Mackerel",
+    "scientificName": "Scomberomorus cavalla",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Scombridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/king-mackerel.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "spanish-mackerel",
+    "name": "Spanish Mackerel",
+    "scientificName": "Scomberomorus maculatus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Scombridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/spanish-mackerel.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pacific-halibut",
+    "name": "Pacific Halibut",
+    "scientificName": "Hippoglossus stenolepis",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Pleuronectidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/pacific-halibut.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "atlantic-halibut",
+    "name": "Atlantic Halibut",
+    "scientificName": "Hippoglossus hippoglossus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Pleuronectidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/atlantic-halibut.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "sole",
+    "name": "Sole",
+    "scientificName": "Solea solea",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Soleidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/sole.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "turbot",
+    "name": "Turbot",
+    "scientificName": "Scophthalmus maximus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Scophthalmidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/turbot.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "haddock",
+    "name": "Haddock",
+    "scientificName": "Melanogrammus aeglefinus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Gadidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/haddock.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "pollock",
+    "name": "Pollock",
+    "scientificName": "Pollachius virens",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Gadidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/pollock.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "herring",
+    "name": "Herring",
+    "scientificName": "Clupea harengus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Clupeidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/herring.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sardine",
+    "name": "Sardine",
+    "scientificName": "Sardina pilchardus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Clupeidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/sardine.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "anchovy",
+    "name": "Anchovy",
+    "scientificName": "Engraulis encrasicolus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Engraulidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/anchovy.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "tilapia",
+    "name": "Tilapia",
+    "scientificName": "Oreochromis niloticus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cichlidae",
+      "region": "Freshwater Africa"
+    },
+    "silhouette": "images/silhouettes/tilapia.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "oscar",
+    "name": "Oscar",
+    "scientificName": "Astronotus ocellatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/oscar.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "discus",
+    "name": "Discus",
+    "scientificName": "Symphysodon discus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/discus.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "guppy",
+    "name": "Guppy",
+    "scientificName": "Poecilia reticulata",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Poeciliidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/guppy.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "molly",
+    "name": "Molly",
+    "scientificName": "Poecilia sphenops",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Poeciliidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/molly.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "platy",
+    "name": "Platy",
+    "scientificName": "Xiphophorus maculatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Poeciliidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/platy.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "swordtail",
+    "name": "Swordtail",
+    "scientificName": "Xiphophorus hellerii",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Poeciliidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/swordtail.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "neon-tetra",
+    "name": "Neon Tetra",
+    "scientificName": "Paracheirodon innesi",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Characidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/neon-tetra.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "cardinal-tetra",
+    "name": "Cardinal Tetra",
+    "scientificName": "Paracheirodon axelrodi",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Characidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/cardinal-tetra.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "piranha",
+    "name": "Piranha",
+    "scientificName": "Pygocentrus nattereri",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Serrasalmidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/piranha.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pacu",
+    "name": "Pacu",
+    "scientificName": "Piaractus brachypomus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Serrasalmidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/pacu.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arapaima",
+    "name": "Arapaima",
+    "scientificName": "Arapaima gigas",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Arapaimidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/arapaima.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "arowana",
+    "name": "Arowana",
+    "scientificName": "Osteoglossum bicirrhosum",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Osteoglossidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/arowana.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "eel",
+    "name": "European Eel",
+    "scientificName": "Anguilla anguilla",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "medium",
+      "family": "Anguillidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/eel.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "moray-eel",
+    "name": "Moray Eel",
+    "scientificName": "Gymnothorax moringa",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Muraenidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/moray-eel.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "electric-eel",
+    "name": "Electric Eel",
+    "scientificName": "Electrophorus electricus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Gymnotidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/electric-eel.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "seahorse",
+    "name": "Seahorse",
+    "scientificName": "Hippocampus hippocampus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Syngnathidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/seahorse.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pipefish",
+    "name": "Pipefish",
+    "scientificName": "Syngnathus acus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Syngnathidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/pipefish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "flying-fish",
+    "name": "Flying Fish",
+    "scientificName": "Exocoetus volitans",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Exocoetidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/flying-fish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "lionfish",
+    "name": "Lionfish",
+    "scientificName": "Pterois volitans",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Scorpaenidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/lionfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "scorpionfish",
+    "name": "Scorpionfish",
+    "scientificName": "Scorpaena scrofa",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Scorpaenidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/scorpionfish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "stonefish",
+    "name": "Stonefish",
+    "scientificName": "Synanceia verrucosa",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Synanceiidae",
+      "region": "Indian"
+    },
+    "silhouette": "images/silhouettes/stonefish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "triggerfish",
+    "name": "Triggerfish",
+    "scientificName": "Balistoides conspicillum",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Balistidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/triggerfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "queen-angelfish",
+    "name": "Queen Angelfish",
+    "scientificName": "Holacanthus ciliaris",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Pomacanthidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/queen-angelfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "emperor-angelfish",
+    "name": "Emperor Angelfish",
+    "scientificName": "Pomacanthus imperator",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Pomacanthidae",
+      "region": "Indian"
+    },
+    "silhouette": "images/silhouettes/emperor-angelfish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "butterflyfish",
+    "name": "Butterflyfish",
+    "scientificName": "Chaetodon striatus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Chaetodontidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/butterflyfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "tang",
+    "name": "Blue Tang",
+    "scientificName": "Paracanthurus hepatus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Acanthuridae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/tang.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "yellow-tang",
+    "name": "Yellow Tang",
+    "scientificName": "Zebrasoma flavescens",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Acanthuridae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/yellow-tang.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "wrasse",
+    "name": "Wrasse",
+    "scientificName": "Thalassoma bifasciatum",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Labridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/wrasse.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "parrotfish",
+    "name": "Parrotfish",
+    "scientificName": "Sparisoma viride",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Scaridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/parrotfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "damselfish",
+    "name": "Damselfish",
+    "scientificName": "Pomacentrus coelestis",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Pomacentridae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/damselfish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "goby",
+    "name": "Goby",
+    "scientificName": "Gobiidae",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Gobiidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/goby.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "blenny",
+    "name": "Blenny",
+    "scientificName": "Ecsenius bicolor",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Blenniidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/blenny.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "jawfish",
+    "name": "Jawfish",
+    "scientificName": "Opistognathus aurifrons",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Opistognathidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/jawfish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "sturgeon",
+    "name": "Sturgeon",
+    "scientificName": "Acipenser sturio",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "giant",
+      "family": "Acipenseridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/sturgeon.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "paddlefish",
+    "name": "Paddlefish",
+    "scientificName": "Polyodon spathula",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Polyodontidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/paddlefish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "gar",
+    "name": "Gar",
+    "scientificName": "Lepisosteus osseus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Lepisosteidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/gar.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "alligator-gar",
+    "name": "Alligator Gar",
+    "scientificName": "Atractosteus spatula",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Lepisosteidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/alligator-gar.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "bowfin",
+    "name": "Bowfin",
+    "scientificName": "Amia calva",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Amiidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/bowfin.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "snakehead",
+    "name": "Snakehead",
+    "scientificName": "Channa argus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Channidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/snakehead.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "peacock-bass",
+    "name": "Peacock Bass",
+    "scientificName": "Cichla ocellaris",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/peacock-bass.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "freshwater-drum",
+    "name": "Freshwater Drum",
+    "scientificName": "Aplodinotus grunniens",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Sciaenidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/freshwater-drum.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "white-bass",
+    "name": "White Bass",
+    "scientificName": "Morone chrysops",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Moronidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/white-bass.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "sauger",
+    "name": "Sauger",
+    "scientificName": "Sander canadensis",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Percidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/sauger.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "zander",
+    "name": "Zander",
+    "scientificName": "Sander lucioperca",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Percidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/zander.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "roach",
+    "name": "Roach",
+    "scientificName": "Rutilus rutilus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/roach.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "bream",
+    "name": "Bream",
+    "scientificName": "Abramis brama",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/bream.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "tench",
+    "name": "Tench",
+    "scientificName": "Tinca tinca",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/tench.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "barbel",
+    "name": "Barbel",
+    "scientificName": "Barbus barbus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/barbel.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "chub",
+    "name": "Chub",
+    "scientificName": "Squalius cephalus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/chub.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "grayling",
+    "name": "Grayling",
+    "scientificName": "Thymallus thymallus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/grayling.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "arctic-char",
+    "name": "Arctic Char",
+    "scientificName": "Salvelinus alpinus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Arctic"
+    },
+    "silhouette": "images/silhouettes/arctic-char.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "whitefish",
+    "name": "Whitefish",
+    "scientificName": "Coregonus lavaretus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/whitefish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "burbot",
+    "name": "Burbot",
+    "scientificName": "Lota lota",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Lotidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/burbot.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "wels-catfish",
+    "name": "Wels Catfish",
+    "scientificName": "Silurus glanis",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Siluridae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/wels-catfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "blue-catfish",
+    "name": "Blue Catfish",
+    "scientificName": "Ictalurus furcatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Ictaluridae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/blue-catfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "flathead-catfish",
+    "name": "Flathead Catfish",
+    "scientificName": "Pylodictis olivaris",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Ictaluridae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/flathead-catfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "cory-catfish",
+    "name": "Cory Catfish",
+    "scientificName": "Corydoras aeneus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Callichthyidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/cory-catfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pleco",
+    "name": "Pleco",
+    "scientificName": "Hypostomus plecostomus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Loricariidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/pleco.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "bristlenose-pleco",
+    "name": "Bristlenose Pleco",
+    "scientificName": "Ancistrus cirrhosus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Loricariidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/bristlenose-pleco.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "loach",
+    "name": "Loach",
+    "scientificName": "Misgurnus anguillicaudatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cobitidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/loach.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "clown-loach",
+    "name": "Clown Loach",
+    "scientificName": "Chromobotia macracanthus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Botiidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/clown-loach.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "danio",
+    "name": "Zebra Danio",
+    "scientificName": "Danio rerio",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/danio.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "rasbora",
+    "name": "Harlequin Rasbora",
+    "scientificName": "Trigonostigma heteromorpha",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/rasbora.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "barb",
+    "name": "Tiger Barb",
+    "scientificName": "Puntigrus tetrazona",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/barb.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "cherry-barb",
+    "name": "Cherry Barb",
+    "scientificName": "Puntius titteya",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/cherry-barb.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "gourami",
+    "name": "Gourami",
+    "scientificName": "Trichogaster lalius",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Osphronemidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/gourami.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "kissing-gourami",
+    "name": "Kissing Gourami",
+    "scientificName": "Helostoma temminckii",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Helostomatidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/kissing-gourami.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "paradise-fish",
+    "name": "Paradise Fish",
+    "scientificName": "Macropodus opercularis",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Osphronemidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/paradise-fish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "mudskipper",
+    "name": "Mudskipper",
+    "scientificName": "Periophthalmus barbarus",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "small",
+      "family": "Oxudercidae",
+      "region": "Indian"
+    },
+    "silhouette": "images/silhouettes/mudskipper.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "archerfish",
+    "name": "Archerfish",
+    "scientificName": "Toxotes jaculatrix",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "small",
+      "family": "Toxotidae",
+      "region": "Indian"
+    },
+    "silhouette": "images/silhouettes/archerfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "lungfish",
+    "name": "Lungfish",
+    "scientificName": "Protopterus annectens",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Protopteridae",
+      "region": "Freshwater Africa"
+    },
+    "silhouette": "images/silhouettes/lungfish.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "bichir",
+    "name": "Bichir",
+    "scientificName": "Polypterus senegalus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Polypteridae",
+      "region": "Freshwater Africa"
+    },
+    "silhouette": "images/silhouettes/bichir.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "nile-perch",
+    "name": "Nile Perch",
+    "scientificName": "Lates niloticus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "giant",
+      "family": "Latidae",
+      "region": "Freshwater Africa"
+    },
+    "silhouette": "images/silhouettes/nile-perch.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "african-cichlid",
+    "name": "African Cichlid",
+    "scientificName": "Aulonocara nyassae",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cichlidae",
+      "region": "Freshwater Africa"
+    },
+    "silhouette": "images/silhouettes/african-cichlid.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "tropheus",
+    "name": "Tropheus",
+    "scientificName": "Tropheus duboisi",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cichlidae",
+      "region": "Freshwater Africa"
+    },
+    "silhouette": "images/silhouettes/tropheus.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "convict-cichlid",
+    "name": "Convict Cichlid",
+    "scientificName": "Amatitlania nigrofasciata",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/convict-cichlid.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "jack-dempsey",
+    "name": "Jack Dempsey",
+    "scientificName": "Rocio octofasciata",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/jack-dempsey.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "green-terror",
+    "name": "Green Terror",
+    "scientificName": "Andinoacara rivulatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/green-terror.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "flowerhorn",
+    "name": "Flowerhorn",
+    "scientificName": "Hybrid cichlid",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Cichlidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/flowerhorn.svg",
+    "difficulty": "medium"
   }
 ]
