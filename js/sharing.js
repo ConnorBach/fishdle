@@ -55,7 +55,7 @@ const Sharing = (function() {
       text += '\n';
     }
 
-    text += '\nhttps://fishdle.example.com';
+    text += '\nhttps://connorbach.github.io/fishdle';
 
     return text;
   }
