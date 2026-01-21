@@ -1,0 +1,262 @@
+[
+  {
+    "id": "bluefin-tuna",
+    "name": "Bluefin Tuna",
+    "scientificName": "Thunnus thynnus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Scombridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/bluefin-tuna.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "atlantic-salmon",
+    "name": "Atlantic Salmon",
+    "scientificName": "Salmo salar",
+    "attributes": {
+      "habitat": "brackish",
+      "size": "large",
+      "family": "Salmonidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/atlantic-salmon.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "clownfish",
+    "name": "Clownfish",
+    "scientificName": "Amphiprion ocellaris",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "tiny",
+      "family": "Pomacentridae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/clownfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "great-white-shark",
+    "name": "Great White Shark",
+    "scientificName": "Carcharodon carcharias",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Lamnidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/great-white-shark.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "rainbow-trout",
+    "name": "Rainbow Trout",
+    "scientificName": "Oncorhynchus mykiss",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Salmonidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/rainbow-trout.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "largemouth-bass",
+    "name": "Largemouth Bass",
+    "scientificName": "Micropterus salmoides",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "medium",
+      "family": "Centrarchidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/largemouth-bass.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "blue-marlin",
+    "name": "Blue Marlin",
+    "scientificName": "Makaira nigricans",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Istiophoridae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/blue-marlin.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pufferfish",
+    "name": "Pufferfish",
+    "scientificName": "Tetraodontidae",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "small",
+      "family": "Tetraodontidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/pufferfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "swordfish",
+    "name": "Swordfish",
+    "scientificName": "Xiphias gladius",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Xiphiidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/swordfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "yellow-perch",
+    "name": "Yellow Perch",
+    "scientificName": "Perca flavescens",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Percidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/yellow-perch.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "manta-ray",
+    "name": "Manta Ray",
+    "scientificName": "Mobula birostris",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Mobulidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/manta-ray.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "goldfish",
+    "name": "Goldfish",
+    "scientificName": "Carassius auratus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Cyprinidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/goldfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "northern-pike",
+    "name": "Northern Pike",
+    "scientificName": "Esox lucius",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Esocidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/northern-pike.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "hammerhead-shark",
+    "name": "Hammerhead Shark",
+    "scientificName": "Sphyrna mokarran",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Sphyrnidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/hammerhead-shark.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "angelfish",
+    "name": "Angelfish",
+    "scientificName": "Pterophyllum scalare",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "small",
+      "family": "Cichlidae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/angelfish.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "atlantic-cod",
+    "name": "Atlantic Cod",
+    "scientificName": "Gadus morhua",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "large",
+      "family": "Gadidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/atlantic-cod.svg",
+    "difficulty": "hard"
+  },
+  {
+    "id": "betta-fish",
+    "name": "Betta Fish",
+    "scientificName": "Betta splendens",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "tiny",
+      "family": "Osphronemidae",
+      "region": "Freshwater Europe/Asia"
+    },
+    "silhouette": "images/silhouettes/betta-fish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "flounder",
+    "name": "Flounder",
+    "scientificName": "Paralichthys dentatus",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "medium",
+      "family": "Paralichthyidae",
+      "region": "Atlantic"
+    },
+    "silhouette": "images/silhouettes/flounder.svg",
+    "difficulty": "medium"
+  },
+  {
+    "id": "catfish",
+    "name": "Channel Catfish",
+    "scientificName": "Ictalurus punctatus",
+    "attributes": {
+      "habitat": "freshwater",
+      "size": "large",
+      "family": "Ictaluridae",
+      "region": "Freshwater Americas"
+    },
+    "silhouette": "images/silhouettes/catfish.svg",
+    "difficulty": "easy"
+  },
+  {
+    "id": "ocean-sunfish",
+    "name": "Ocean Sunfish",
+    "scientificName": "Mola mola",
+    "attributes": {
+      "habitat": "saltwater",
+      "size": "giant",
+      "family": "Molidae",
+      "region": "Pacific"
+    },
+    "silhouette": "images/silhouettes/ocean-sunfish.svg",
+    "difficulty": "hard"
+  }
+]

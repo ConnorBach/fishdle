@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fishdle - Daily Fish Guessing Game</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🐟 Fishdle</h1>
+      <p class="subtitle">Daily Fish Guessing Game</p>
+      <div class="game-number" id="gameNumber"></div>
+    </header>
+
+    <main id="gameArea">
+      <!-- Silhouette Display -->
+      <div class="silhouette-container">
+        <div id="silhouette" class="silhouette">
+          <!-- SVG silhouette will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Name Blanks -->
+      <div class="name-display">
+        <div id="nameBlanks" class="name-blanks"></div>
+      </div>
+
+      <!-- Score Display -->
+      <div class="score-display">
+        <span>Potential Score: </span>
+        <span id="currentScore" class="score-value">100</span>
+      </div>
+
+      <!-- Hint Buttons -->
+      <div class="hint-buttons">
+        <button id="letterHintBtn" class="hint-btn letter-hint">
+          <span class="hint-icon">🔤</span>
+          <span class="hint-text">Reveal Letter</span>
+          <span class="hint-cost">-10 pts</span>
+        </button>
+        <button id="attributeHintBtn" class="hint-btn attribute-hint">
+          <span class="hint-icon">📊</span>
+          <span class="hint-text">Reveal Attribute</span>
+          <span class="hint-cost">-5 pts</span>
+        </button>
+      </div>
+
+      <!-- Revealed Attributes -->
+      <div id="revealedAttributes" class="revealed-attributes hidden">
+        <h3>Revealed Attributes</h3>
+        <div id="attributesList" class="attributes-list"></div>
+      </div>
+
+      <!-- Guess Input -->
+      <div class="guess-input-container">
+        <div class="autocomplete-wrapper">
+          <input
+            type="text"
+            id="guessInput"
+            class="guess-input"
+            placeholder="Type a fish name..."
+            autocomplete="off"
+          >
+          <div id="autocompleteList" class="autocomplete-list hidden"></div>
+        </div>
+        <button id="submitGuess" class="submit-btn">Guess</button>
+      </div>
+
+      <!-- Guess History -->
+      <div class="guess-history">
+        <h3>Previous Guesses</h3>
+        <div id="guessHistory" class="history-list"></div>
+      </div>
+    </main>
+
+    <!-- Win/Lose Modal -->
+    <div id="resultModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle"></h2>
+        </div>
+        <div class="modal-body">
+          <div id="fishReveal" class="fish-reveal"></div>
+          <div class="result-stats">
+            <div class="stat">
+              <span class="stat-label">Score</span>
+              <span id="finalScore" class="stat-value"></span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Guesses</span>
+              <span id="totalGuesses" class="stat-value"></span>
+            </div>
+          </div>
+          <div class="player-stats">
+            <h3>Your Stats</h3>
+            <div class="stats-grid">
+              <div class="stat-box">
+                <span class="stat-number" id="gamesPlayed">0</span>
+                <span class="stat-label">Played</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="winPercent">0%</span>
+                <span class="stat-label">Win %</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="currentStreak">0</span>
+                <span class="stat-label">Streak</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-number" id="maxStreak">0</span>
+                <span class="stat-label">Max</span>
+              </div>
+            </div>
+          </div>
+          <div id="shareResult" class="share-result"></div>
+          <button id="shareBtn" class="share-btn">
+            <span>📋</span> Share Result
+          </button>
+          <p id="shareConfirm" class="share-confirm hidden">Copied to clipboard!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/daily.js"></script>
+  <script src="js/autocomplete.js"></script>
+  <script src="js/hints.js"></script>
+  <script src="js/sharing.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
