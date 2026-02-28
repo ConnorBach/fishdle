@@ -1,13 +1,13 @@
-/* CSS Variables */
+/* CSS Variables — Nature Green Theme */
 :root {
-  --primary-color: #0077b6;
-  --primary-dark: #005b8a;
-  --secondary-color: #00b4d8;
-  --accent-color: #90e0ef;
-  --background-color: #caf0f8;
+  --primary-color: #2d6a4f;
+  --primary-dark: #1b4332;
+  --secondary-color: #52b788;
+  --accent-color: #b7e4c7;
+  --background-color: #d8f3dc;
   --card-background: #ffffff;
-  --text-color: #023e8a;
-  --text-light: #0096c7;
+  --text-color: #1b4332;
+  --text-light: #40916c;
   --success-color: #2d6a4f;
   --success-bg: #95d5b2;
   --warning-color: #9d4800;
@@ -29,7 +29,7 @@
 /* Base Styles */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background: linear-gradient(180deg, var(--background-color) 0%, #a9d6e5 100%);
+  background: linear-gradient(180deg, #d8f3dc 0%, #95d5b2 100%);
   min-height: 100vh;
   color: var(--text-color);
   line-height: 1.6;
@@ -47,10 +47,35 @@ header {
   margin-bottom: 24px;
 }
 
+.header-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
 header h1 {
   font-size: 2.5rem;
   color: var(--primary-color);
   margin-bottom: 4px;
+}
+
+.settings-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.settings-btn:hover {
+  opacity: 1;
 }
 
 .subtitle {
@@ -69,7 +94,7 @@ header h1 {
   background: var(--card-background);
   border-radius: var(--border-radius);
   padding: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   box-shadow: var(--shadow);
   display: flex;
   justify-content: center;
@@ -94,6 +119,20 @@ header h1 {
 .silhouette.revealed svg {
   fill: var(--primary-color);
   transition: fill 0.5s ease;
+}
+
+/* Attribution */
+.attribution {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.attribution a {
+  color: var(--primary-color);
+  text-decoration: underline;
 }
 
 /* Name Blanks */
@@ -231,20 +270,15 @@ header h1 {
   font-weight: 600;
 }
 
-/* Guess Input */
+/* Guess Input (no autocomplete) */
 .guess-input-container {
   display: flex;
   gap: 12px;
-  margin-bottom: 24px;
-}
-
-.autocomplete-wrapper {
-  flex: 1;
-  position: relative;
+  margin-bottom: 8px;
 }
 
 .guess-input {
-  width: 100%;
+  flex: 1;
   padding: 14px 16px;
   border: 2px solid var(--secondary-color);
   border-radius: var(--border-radius);
@@ -260,6 +294,17 @@ header h1 {
 .guess-input:disabled {
   background: #f0f0f0;
   cursor: not-allowed;
+}
+
+.guess-input.error {
+  border-color: var(--error-color);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
 .submit-btn {
@@ -283,46 +328,23 @@ header h1 {
   cursor: not-allowed;
 }
 
-/* Autocomplete */
-.autocomplete-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: var(--card-background);
-  border: 2px solid var(--secondary-color);
-  border-top: none;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 100;
-  box-shadow: var(--shadow);
+/* Guess Message */
+.guess-message {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 8px;
 }
 
-.autocomplete-item {
-  padding: 12px 16px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-  transition: background 0.15s ease;
-}
-
-.autocomplete-item:last-child {
-  border-bottom: none;
-}
-
-.autocomplete-item:hover,
-.autocomplete-item.active {
+.guess-message.not-found {
+  color: var(--text-light);
   background: var(--accent-color);
 }
 
-.autocomplete-item .fish-name {
-  font-weight: 600;
-}
-
-.autocomplete-item .scientific-name {
-  font-size: 0.75rem;
-  color: var(--text-light);
-  font-style: italic;
+.guess-message.matched {
+  color: var(--primary-color);
+  background: var(--success-bg);
 }
 
 /* Guess History */
@@ -345,7 +367,7 @@ header h1 {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -372,11 +394,37 @@ header h1 {
   padding: 8px 12px;
   font-weight: 600;
   border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .guess-name.correct {
   background: var(--success-bg);
   color: var(--success-color);
+}
+
+/* Taxonomic Distance Bar */
+.taxo-distance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+
+.taxo-bar {
+  width: 60px;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.taxo-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
 }
 
 .attribute-grid {
@@ -432,6 +480,125 @@ header h1 {
   padding: 20px;
   color: var(--text-light);
   font-style: italic;
+}
+
+/* Settings Modal */
+.settings-modal-content {
+  max-width: 360px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.setting-label p {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+.setting-control {
+  display: flex;
+  gap: 4px;
+}
+
+.difficulty-btn {
+  padding: 8px 16px;
+  border: 2px solid var(--primary-color);
+  background: var(--card-background);
+  color: var(--primary-color);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.difficulty-btn.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.close-settings-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.close-settings-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* Taxonomy Tree */
+.taxonomy-tree {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.taxonomy-tree .taxo-node {
+  padding-left: 20px;
+  position: relative;
+}
+
+.taxonomy-tree .taxo-node::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ccc;
+}
+
+.taxonomy-tree .taxo-node::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 12px;
+  height: 2px;
+  background: #ccc;
+}
+
+.taxonomy-tree .taxo-node:last-child::before {
+  bottom: 50%;
+}
+
+.taxonomy-tree .taxo-label {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.taxonomy-tree .taxo-label.target {
+  background: var(--success-bg);
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+.taxonomy-tree .taxo-label.guess {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.taxonomy-tree .taxo-label.shared {
+  color: var(--text-light);
 }
 
 /* Modal */
@@ -492,18 +659,18 @@ header h1 {
   padding: 24px;
 }
 
-.fish-reveal {
+.animal-reveal {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.fish-reveal .fish-name {
+.animal-reveal .animal-name {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--primary-color);
 }
 
-.fish-reveal .scientific-name {
+.animal-reveal .scientific-name {
   font-size: 0.875rem;
   color: var(--text-light);
   font-style: italic;
@@ -657,5 +824,10 @@ header h1 {
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .setting-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

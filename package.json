@@ -1,6 +1,11 @@
 {
+  "name": "animaldle",
+  "version": "2.0.0",
+  "description": "Daily Animal Guessing Game",
+  "scripts": {
+    "build:index": "node tools/build-animal-index.js"
+  },
   "dependencies": {
-    "potrace": "^2.1.8",
-    "sharp": "^0.34.5"
+    "node-fetch": "^2.7.0"
   }
 }

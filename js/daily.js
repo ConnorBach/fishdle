@@ -1,6 +1,6 @@
 /**
- * Daily fish selection module
- * Uses seeded random to ensure same fish for everyone worldwide on the same day
+ * Daily animal selection module
+ * Uses seeded random to ensure same animal for everyone worldwide on the same day
  */
 
 const Daily = (function() {
@@ -28,26 +28,44 @@ const Daily = (function() {
     return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
   }
 
-  // Calculate game number (days since launch)
+  // Calculate game number (days since Animaldle launch)
   function getGameNumber(date) {
-    const launchDate = new Date(Date.UTC(2024, 0, 1)); // January 1, 2024
+    const launchDate = new Date(Date.UTC(2025, 0, 1)); // January 1, 2025
     const diffTime = date.getTime() - launchDate.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     return diffDays + 1;
   }
 
-  // Get the daily fish from the database
-  function getDailyFish(fishDatabase, date = null) {
+  /**
+   * Get the daily animal from the database
+   * @param {Array} animalDatabase - Full animal database
+   * @param {string} difficulty - 'normal' or 'expert'
+   * @param {Date} date - Optional date override
+   */
+  function getDailyAnimal(animalDatabase, difficulty = 'normal', date = null) {
     if (!date) {
       date = getTodayUTC();
     }
 
-    const seed = dateToSeed(date);
+    // Filter by difficulty
+    let pool;
+    if (difficulty === 'expert') {
+      pool = animalDatabase;
+    } else {
+      // Normal: easy + medium only
+      pool = animalDatabase.filter(a => a.difficulty === 'easy' || a.difficulty === 'medium');
+    }
+
+    if (pool.length === 0) pool = animalDatabase;
+
+    // Use different seed offset for different difficulty modes so they get different animals
+    const baseSeed = dateToSeed(date);
+    const seed = difficulty === 'expert' ? baseSeed + 7919 : baseSeed;
     const rng = seededRandom(seed);
-    const index = Math.floor(rng() * fishDatabase.length);
+    const index = Math.floor(rng() * pool.length);
 
     return {
-      fish: fishDatabase[index],
+      animal: pool[index],
       gameNumber: getGameNumber(date),
       date: date.toISOString().split('T')[0]
     };
@@ -59,7 +77,7 @@ const Daily = (function() {
   }
 
   return {
-    getDailyFish,
+    getDailyAnimal,
     getGameNumber,
     getTodayKey,
     getTodayUTC

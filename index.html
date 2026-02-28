@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fishdle - Daily Fish Guessing Game</title>
+  <title>Animaldle - Daily Animal Guessing Game</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>🐟 Fishdle</h1>
-      <p class="subtitle">Daily Fish Guessing Game</p>
+      <div class="header-row">
+        <h1>🐾 Animaldle</h1>
+        <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
+      </div>
+      <p class="subtitle">Daily Animal Guessing Game</p>
       <div class="game-number" id="gameNumber"></div>
     </header>
 
@@ -22,6 +25,9 @@
           <!-- SVG silhouette will be inserted here -->
         </div>
       </div>
+
+      <!-- Attribution (shown after game end) -->
+      <div id="attribution" class="attribution hidden"></div>
 
       <!-- Name Blanks -->
       <div class="name-display">
@@ -54,20 +60,18 @@
         <div id="attributesList" class="attributes-list"></div>
       </div>
 
-      <!-- Guess Input -->
+      <!-- Guess Input (free text, no autocomplete) -->
       <div class="guess-input-container">
-        <div class="autocomplete-wrapper">
-          <input
-            type="text"
-            id="guessInput"
-            class="guess-input"
-            placeholder="Type a fish name..."
-            autocomplete="off"
-          >
-          <div id="autocompleteList" class="autocomplete-list hidden"></div>
-        </div>
+        <input
+          type="text"
+          id="guessInput"
+          class="guess-input"
+          placeholder="Type an animal name..."
+          autocomplete="off"
+        >
         <button id="submitGuess" class="submit-btn">Guess</button>
       </div>
+      <div id="guessMessage" class="guess-message hidden"></div>
 
       <!-- Guess History -->
       <div class="guess-history">
@@ -76,6 +80,28 @@
       </div>
     </main>
 
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content settings-modal-content">
+        <div class="modal-header">
+          <h2>⚙️ Settings</h2>
+        </div>
+        <div class="modal-body">
+          <div class="setting-row">
+            <div class="setting-label">
+              <strong>Difficulty</strong>
+              <p class="setting-description">Expert mode includes all ~11,950 organisms</p>
+            </div>
+            <div class="setting-control">
+              <button id="difficultyNormal" class="difficulty-btn active">Normal</button>
+              <button id="difficultyExpert" class="difficulty-btn">Expert</button>
+            </div>
+          </div>
+          <button id="closeSettings" class="close-settings-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Win/Lose Modal -->
     <div id="resultModal" class="modal hidden">
       <div class="modal-content">
@@ -83,7 +109,11 @@
           <h2 id="modalTitle"></h2>
         </div>
         <div class="modal-body">
-          <div id="fishReveal" class="fish-reveal"></div>
+          <div id="animalReveal" class="animal-reveal"></div>
+
+          <!-- Taxonomy Tree -->
+          <div id="taxonomyTree" class="taxonomy-tree hidden"></div>
+
           <div class="result-stats">
             <div class="stat">
               <span class="stat-label">Score</span>
@@ -126,7 +156,6 @@
   </div>
 
   <script src="js/daily.js"></script>
-  <script src="js/autocomplete.js"></script>
   <script src="js/hints.js"></script>
   <script src="js/sharing.js"></script>
   <script src="js/game.js"></script>

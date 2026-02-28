@@ -1,5 +1,5 @@
 /**
- * Main game logic for Fishdle
+ * Main game logic for Animaldle
  */
 
 const Game = (function() {
@@ -9,23 +9,46 @@ const Game = (function() {
   const MIN_SCORE = 10;
 
   const SIZE_ORDER = ['tiny', 'small', 'medium', 'large', 'giant'];
-  const OCEAN_GROUPS = {
-    'Atlantic': ['Atlantic', 'Arctic'],
-    'Pacific': ['Pacific', 'Indian'],
-    'Arctic': ['Atlantic', 'Arctic'],
-    'Indian': ['Pacific', 'Indian'],
-    'Freshwater Americas': ['Freshwater Americas'],
-    'Freshwater Europe/Asia': ['Freshwater Europe/Asia']
+
+  // Aquatic group for "close" habitat matches
+  const AQUATIC_GROUP = ['freshwater', 'marine'];
+
+  // Phylum groupings for "close" class matches (same broad group)
+  const CLASS_PHYLUM_MAP = {
+    'Mammal': 'Chordata',
+    'Bird': 'Chordata',
+    'Reptile': 'Chordata',
+    'Amphibian': 'Chordata',
+    'Fish': 'Chordata',
+    'Insect': 'Arthropoda',
+    'Arachnid': 'Arthropoda',
+    'Crustacean': 'Arthropoda',
+    'Myriapod': 'Arthropoda',
+    'Mollusk': 'Mollusca',
+    'Cnidarian': 'Cnidaria',
+    'Echinoderm': 'Echinodermata',
+    'Worm': 'Annelida',
+    'Sponge': 'Porifera',
+    'Plant': 'Plantae',
+    'Fungus': 'Fungi'
+  };
+
+  // Diet adjacency for "close" matches
+  const DIET_CLOSE = {
+    'omnivore': ['carnivore', 'herbivore', 'insectivore'],
+    'carnivore': ['omnivore', 'insectivore'],
+    'herbivore': ['omnivore'],
+    'insectivore': ['carnivore', 'omnivore']
   };
 
   // Game state
-  let fishDatabase = [];
-  let targetFish = null;
+  let animalDatabase = [];
+  let targetAnimal = null;
   let gameNumber = 0;
   let guesses = [];
   let gameOver = false;
   let won = false;
-  let selectedFish = null;
+  let difficulty = 'normal';
 
   // DOM elements
   let elements = {};
@@ -43,34 +66,30 @@ const Game = (function() {
    */
   async function init() {
     cacheElements();
-    await loadFishDatabase();
+    loadDifficulty();
+    await loadAnimalDatabase();
+
+    // Migrate old Fishdle stats if present
+    migrateFromFishdle();
+
     loadStats();
 
     const todayKey = Daily.getTodayKey();
     const savedGame = loadGameState(todayKey);
 
-    const dailyData = Daily.getDailyFish(fishDatabase);
-    targetFish = dailyData.fish;
+    const dailyData = Daily.getDailyAnimal(animalDatabase, difficulty);
+    targetAnimal = dailyData.animal;
     gameNumber = dailyData.gameNumber;
 
     elements.gameNumber.textContent = `#${gameNumber}`;
 
     // Initialize hints
-    Hints.init(targetFish, updateHintsDisplay);
-
-    // Initialize autocomplete
-    Autocomplete.init(
-      elements.guessInput,
-      elements.autocompleteList,
-      fishDatabase,
-      handleFishSelect
-    );
+    Hints.init(targetAnimal, updateHintsDisplay);
 
     // Restore saved state if exists
     if (savedGame) {
       await restoreGameState(savedGame);
     } else {
-      // Fresh game
       await renderSilhouette();
       updateNameBlanks();
       updateScore();
@@ -79,6 +98,7 @@ const Game = (function() {
     bindEvents();
     renderGuessHistory();
     updateHintsDisplay();
+    updateDifficultyUI();
 
     if (gameOver) {
       disableInput();
@@ -92,6 +112,7 @@ const Game = (function() {
     elements = {
       gameNumber: document.getElementById('gameNumber'),
       silhouette: document.getElementById('silhouette'),
+      attribution: document.getElementById('attribution'),
       nameBlanks: document.getElementById('nameBlanks'),
       currentScore: document.getElementById('currentScore'),
       letterHintBtn: document.getElementById('letterHintBtn'),
@@ -99,12 +120,13 @@ const Game = (function() {
       revealedAttributes: document.getElementById('revealedAttributes'),
       attributesList: document.getElementById('attributesList'),
       guessInput: document.getElementById('guessInput'),
-      autocompleteList: document.getElementById('autocompleteList'),
+      guessMessage: document.getElementById('guessMessage'),
       submitGuess: document.getElementById('submitGuess'),
       guessHistory: document.getElementById('guessHistory'),
       resultModal: document.getElementById('resultModal'),
       modalTitle: document.getElementById('modalTitle'),
-      fishReveal: document.getElementById('fishReveal'),
+      animalReveal: document.getElementById('animalReveal'),
+      taxonomyTree: document.getElementById('taxonomyTree'),
       finalScore: document.getElementById('finalScore'),
       totalGuesses: document.getElementById('totalGuesses'),
       gamesPlayed: document.getElementById('gamesPlayed'),
@@ -113,20 +135,25 @@ const Game = (function() {
       maxStreak: document.getElementById('maxStreak'),
       shareResult: document.getElementById('shareResult'),
       shareBtn: document.getElementById('shareBtn'),
-      shareConfirm: document.getElementById('shareConfirm')
+      shareConfirm: document.getElementById('shareConfirm'),
+      settingsBtn: document.getElementById('settingsBtn'),
+      settingsModal: document.getElementById('settingsModal'),
+      difficultyNormal: document.getElementById('difficultyNormal'),
+      difficultyExpert: document.getElementById('difficultyExpert'),
+      closeSettings: document.getElementById('closeSettings')
     };
   }
 
   /**
-   * Load fish database from JSON
+   * Load animal database from JSON
    */
-  async function loadFishDatabase() {
+  async function loadAnimalDatabase() {
     try {
-      const response = await fetch('data/fish.json');
-      fishDatabase = await response.json();
+      const response = await fetch('data/animals.json');
+      animalDatabase = await response.json();
     } catch (err) {
-      console.error('Failed to load fish database:', err);
-      fishDatabase = [];
+      console.error('Failed to load animal database:', err);
+      animalDatabase = [];
     }
   }
 
@@ -143,52 +170,85 @@ const Game = (function() {
     elements.letterHintBtn.addEventListener('click', useLetterHint);
     elements.attributeHintBtn.addEventListener('click', useAttributeHint);
     elements.shareBtn.addEventListener('click', handleShare);
+
+    // Settings
+    elements.settingsBtn.addEventListener('click', () => {
+      elements.settingsModal.classList.remove('hidden');
+    });
+    elements.closeSettings.addEventListener('click', () => {
+      elements.settingsModal.classList.add('hidden');
+    });
+    elements.settingsModal.addEventListener('click', (e) => {
+      if (e.target === elements.settingsModal) {
+        elements.settingsModal.classList.add('hidden');
+      }
+    });
+    elements.difficultyNormal.addEventListener('click', () => setDifficulty('normal'));
+    elements.difficultyExpert.addEventListener('click', () => setDifficulty('expert'));
+
+    // Close result modal when clicking overlay
+    elements.resultModal.addEventListener('click', (e) => {
+      if (e.target === elements.resultModal) {
+        elements.resultModal.classList.add('hidden');
+      }
+    });
+
+    // Clear guess message on input
+    elements.guessInput.addEventListener('input', () => {
+      elements.guessMessage.classList.add('hidden');
+    });
   }
 
   /**
-   * Render fish silhouette
+   * Render animal silhouette from PhyloPic CDN
    */
   async function renderSilhouette() {
+    if (!targetAnimal || !targetAnimal.svgUrl) {
+      elements.silhouette.innerHTML = generateFallbackSilhouette();
+      return;
+    }
+
+    // Check localStorage cache for this SVG
+    const cacheKey = `animaldle-svg-${targetAnimal.id}`;
+    const cachedSvg = localStorage.getItem(cacheKey);
+
+    if (cachedSvg) {
+      elements.silhouette.innerHTML = cachedSvg;
+      return;
+    }
+
     try {
-      // Load the SVG file for the target fish
-      const response = await fetch(targetFish.silhouette);
+      const response = await fetch(targetAnimal.svgUrl);
       if (response.ok) {
         let svgContent = await response.text();
-        // Add width/height attributes for proper sizing
+        // Ensure proper sizing
         svgContent = svgContent.replace(/<svg/, '<svg width="200" height="200"');
         elements.silhouette.innerHTML = svgContent;
+
+        // Cache in localStorage (only if not too large)
+        if (svgContent.length < 50000) {
+          try {
+            localStorage.setItem(cacheKey, svgContent);
+          } catch (e) {
+            // localStorage full, ignore
+          }
+        }
       } else {
-        // Fallback to generated silhouette
-        elements.silhouette.innerHTML = generateFallbackSilhouette(targetFish);
+        elements.silhouette.innerHTML = generateFallbackSilhouette();
       }
     } catch (err) {
       console.warn('Failed to load silhouette, using fallback:', err);
-      elements.silhouette.innerHTML = generateFallbackSilhouette(targetFish);
+      elements.silhouette.innerHTML = generateFallbackSilhouette();
     }
   }
 
   /**
-   * Generate a fallback fish silhouette SVG
+   * Generate a fallback silhouette SVG
    */
-  function generateFallbackSilhouette(fish) {
-    const name = fish.name.toLowerCase();
-    let path;
-
-    if (name.includes('shark')) {
-      path = 'M10,50 Q30,30 60,35 L90,25 L85,40 Q95,45 85,50 Q95,55 85,60 L90,75 L60,65 Q30,70 10,50 Z';
-    } else if (name.includes('ray')) {
-      path = 'M50,20 Q80,40 90,50 Q80,60 50,80 Q20,60 10,50 Q20,40 50,20 Z';
-    } else if (name.includes('flounder')) {
-      path = 'M10,45 Q20,35 50,30 Q80,35 90,50 Q80,65 50,70 Q20,65 10,55 Z';
-    } else if (name.includes('puffer') || name.includes('sunfish')) {
-      path = 'M15,50 Q15,30 40,25 Q70,20 85,45 L95,40 L92,50 L95,60 L85,55 Q70,80 40,75 Q15,70 15,50 Z';
-    } else {
-      path = 'M10,50 Q20,30 45,28 Q70,25 80,40 L95,35 L90,50 L95,65 L80,60 Q70,75 45,72 Q20,70 10,50 Z';
-    }
-
+  function generateFallbackSilhouette() {
     return `
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
-        <path d="${path}" fill="#1a1a2e"/>
+        <text x="50" y="60" text-anchor="middle" font-size="50" fill="#1a1a2e">?</text>
       </svg>
     `;
   }
@@ -228,15 +288,7 @@ const Game = (function() {
   }
 
   /**
-   * Handle fish selection from autocomplete
-   */
-  function handleFishSelect(fish) {
-    selectedFish = fish;
-    submitGuess();
-  }
-
-  /**
-   * Submit a guess
+   * Submit a guess (free text + fuzzy match)
    */
   function submitGuess() {
     if (gameOver) return;
@@ -244,38 +296,46 @@ const Game = (function() {
     const inputValue = elements.guessInput.value.trim();
     if (!inputValue) return;
 
-    // Find the fish by name
-    const guessedFish = selectedFish ||
-      fishDatabase.find(f => f.name.toLowerCase() === inputValue.toLowerCase());
+    // Find animal by fuzzy match
+    const matchResult = fuzzyMatchAnimal(inputValue);
 
-    if (!guessedFish) {
-      // Invalid fish name
-      elements.guessInput.classList.add('error');
-      setTimeout(() => elements.guessInput.classList.remove('error'), 500);
+    if (!matchResult) {
+      // Not found — show message, no penalty
+      showGuessMessage('Animal not found. Try a different name.', 'not-found');
       return;
     }
 
+    const guessedAnimal = matchResult;
+
     // Check if already guessed
-    if (guesses.some(g => g.fish.id === guessedFish.id)) {
-      Autocomplete.clear();
-      selectedFish = null;
+    if (guesses.some(g => g.animal.id === guessedAnimal.id)) {
+      showGuessMessage('Already guessed!', 'not-found');
+      elements.guessInput.value = '';
       return;
+    }
+
+    // Show matched name if fuzzy
+    if (guessedAnimal.name.toLowerCase() !== inputValue.toLowerCase() &&
+        guessedAnimal.scientificName.toLowerCase() !== inputValue.toLowerCase()) {
+      showGuessMessage(`Matched: ${guessedAnimal.name}`, 'matched');
+    } else {
+      elements.guessMessage.classList.add('hidden');
     }
 
     // Record guess
-    const comparison = compareAttributes(guessedFish, targetFish);
+    const comparison = compareAttributes(guessedAnimal, targetAnimal);
+    const taxoDistance = calculateTaxonomicDistance(guessedAnimal, targetAnimal);
     const guess = {
-      fish: guessedFish,
+      animal: guessedAnimal,
       comparison,
-      correct: guessedFish.id === targetFish.id
+      taxoDistance,
+      correct: guessedAnimal.id === targetAnimal.id
     };
 
     guesses.push(guess);
-    Autocomplete.setGuessedFish(guesses.map(g => g.fish.id));
 
     // Clear input
-    Autocomplete.clear();
-    selectedFish = null;
+    elements.guessInput.value = '';
 
     // Update display
     renderGuessHistory();
@@ -291,18 +351,132 @@ const Game = (function() {
   }
 
   /**
-   * Compare attributes between guessed fish and target
+   * Fuzzy match input against animal database
+   * Priority: exact name → exact scientific → startsWith → Levenshtein ≤ 2
+   */
+  function fuzzyMatchAnimal(input) {
+    const normalized = input.toLowerCase().trim();
+
+    // Exact match on common name
+    const exactName = animalDatabase.find(a => a.name.toLowerCase() === normalized);
+    if (exactName) return exactName;
+
+    // Exact match on scientific name
+    const exactScientific = animalDatabase.find(a => a.scientificName.toLowerCase() === normalized);
+    if (exactScientific) return exactScientific;
+
+    // StartsWith on common name
+    const startsWithName = animalDatabase.find(a => a.name.toLowerCase().startsWith(normalized) && normalized.length >= 3);
+    if (startsWithName) return startsWithName;
+
+    // StartsWith on scientific name
+    const startsWithScientific = animalDatabase.find(a => a.scientificName.toLowerCase().startsWith(normalized) && normalized.length >= 3);
+    if (startsWithScientific) return startsWithScientific;
+
+    // Levenshtein distance ≤ 2 on common name
+    let bestMatch = null;
+    let bestDist = 3;
+    for (const animal of animalDatabase) {
+      const dist = levenshteinDistance(normalized, animal.name.toLowerCase());
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestMatch = animal;
+      }
+    }
+    if (bestMatch) return bestMatch;
+
+    return null;
+  }
+
+  /**
+   * Levenshtein distance between two strings
+   */
+  function levenshteinDistance(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+
+    // Short circuit for very different lengths
+    if (Math.abs(a.length - b.length) > 2) return 3;
+
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) {
+      matrix[i] = [i];
+    }
+    for (let j = 0; j <= a.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b[i - 1] === a[j - 1]) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
+        }
+      }
+    }
+
+    return matrix[b.length][a.length];
+  }
+
+  /**
+   * Show a temporary message below the guess input
+   */
+  function showGuessMessage(text, type) {
+    elements.guessMessage.textContent = text;
+    elements.guessMessage.className = `guess-message ${type}`;
+    elements.guessMessage.classList.remove('hidden');
+
+    setTimeout(() => {
+      elements.guessMessage.classList.add('hidden');
+    }, 3000);
+  }
+
+  /**
+   * Compare attributes between guessed animal and target
+   * Attributes: class, habitat, diet, size
    */
   function compareAttributes(guessed, target) {
     const comparison = {};
 
-    // Habitat comparison
-    comparison.habitat = {
-      value: guessed.attributes.habitat,
-      match: guessed.attributes.habitat === target.attributes.habitat ? 'exact' : 'wrong'
-    };
+    // Class comparison
+    const guessedClass = guessed.attributes.class;
+    const targetClass = target.attributes.class;
+    let classMatch = 'wrong';
+    if (guessedClass === targetClass) {
+      classMatch = 'exact';
+    } else if (CLASS_PHYLUM_MAP[guessedClass] && CLASS_PHYLUM_MAP[guessedClass] === CLASS_PHYLUM_MAP[targetClass]) {
+      classMatch = 'close';
+    }
+    comparison.class = { value: guessedClass, match: classMatch };
 
-    // Size comparison
+    // Habitat comparison
+    const guessedHabitat = guessed.attributes.habitat;
+    const targetHabitat = target.attributes.habitat;
+    let habitatMatch = 'wrong';
+    if (guessedHabitat === targetHabitat) {
+      habitatMatch = 'exact';
+    } else if (AQUATIC_GROUP.includes(guessedHabitat) && AQUATIC_GROUP.includes(targetHabitat)) {
+      habitatMatch = 'close';
+    }
+    comparison.habitat = { value: guessedHabitat, match: habitatMatch };
+
+    // Diet comparison
+    const guessedDiet = guessed.attributes.diet;
+    const targetDiet = target.attributes.diet;
+    let dietMatch = 'wrong';
+    if (guessedDiet === targetDiet) {
+      dietMatch = 'exact';
+    } else if (DIET_CLOSE[guessedDiet] && DIET_CLOSE[guessedDiet].includes(targetDiet)) {
+      dietMatch = 'close';
+    }
+    comparison.diet = { value: guessedDiet, match: dietMatch };
+
+    // Size comparison (with direction arrows)
     const guessedSizeIndex = SIZE_ORDER.indexOf(guessed.attributes.size);
     const targetSizeIndex = SIZE_ORDER.indexOf(target.attributes.size);
     const sizeDiff = guessedSizeIndex - targetSizeIndex;
@@ -313,27 +487,28 @@ const Game = (function() {
       direction: sizeDiff > 0 ? 'down' : sizeDiff < 0 ? 'up' : null
     };
 
-    // Family comparison
-    comparison.family = {
-      value: guessed.attributes.family,
-      match: guessed.attributes.family === target.attributes.family ? 'exact' : 'wrong'
-    };
-
-    // Region comparison
-    const guessedOceanGroup = OCEAN_GROUPS[guessed.attributes.region] || [];
-    const isCloseRegion = guessedOceanGroup.includes(target.attributes.region);
-
-    comparison.region = {
-      value: guessed.attributes.region,
-      match: guessed.attributes.region === target.attributes.region ? 'exact' :
-             isCloseRegion ? 'close' : 'wrong'
-    };
-
     return comparison;
   }
 
   /**
-   * Render guess history
+   * Calculate taxonomic distance between two animals
+   * Returns { shared, total, percent }
+   */
+  function calculateTaxonomicDistance(guessed, target) {
+    const guessedLineage = new Set(guessed.lineage || []);
+    const targetLineage = new Set(target.lineage || []);
+
+    const allTaxa = new Set([...guessedLineage, ...targetLineage]);
+    const shared = [...guessedLineage].filter(x => targetLineage.has(x));
+
+    const total = allTaxa.size || 1;
+    const percent = Math.round((shared.length / total) * 100);
+
+    return { shared: shared.length, total, percent };
+  }
+
+  /**
+   * Render guess history with taxonomic distance bar
    */
   function renderGuessHistory() {
     if (guesses.length === 0) {
@@ -341,21 +516,31 @@ const Game = (function() {
       return;
     }
 
-    elements.guessHistory.innerHTML = guesses.map((guess, index) => {
-      const { fish, comparison, correct } = guess;
+    elements.guessHistory.innerHTML = guesses.map((guess) => {
+      const { animal, comparison, taxoDistance, correct } = guess;
+
+      // Taxonomic distance bar color
+      const pct = taxoDistance?.percent || 0;
+      const barColor = pct > 70 ? '#2d6a4f' : pct > 40 ? '#f9c74f' : '#e63946';
 
       return `
         <div class="guess-entry">
-          <div class="guess-name ${correct ? 'correct' : ''}">${fish.name}</div>
+          <div class="guess-name ${correct ? 'correct' : ''}">
+            <span>${animal.name}</span>
+            <span class="taxo-distance">
+              <span class="taxo-bar"><span class="taxo-bar-fill" style="width:${pct}%;background:${barColor}"></span></span>
+              <span>${pct}%</span>
+            </span>
+          </div>
           <div class="attribute-grid">
+            <div class="attribute-header">Class</div>
             <div class="attribute-header">Habitat</div>
+            <div class="attribute-header">Diet</div>
             <div class="attribute-header">Size</div>
-            <div class="attribute-header">Family</div>
-            <div class="attribute-header">Region</div>
+            ${renderAttributeCell('class', comparison.class)}
             ${renderAttributeCell('habitat', comparison.habitat)}
+            ${renderAttributeCell('diet', comparison.diet)}
             ${renderAttributeCell('size', comparison.size)}
-            ${renderAttributeCell('family', comparison.family)}
-            ${renderAttributeCell('region', comparison.region)}
           </div>
         </div>
       `;
@@ -414,11 +599,9 @@ const Game = (function() {
    * Update hints display
    */
   function updateHintsDisplay() {
-    // Update hint buttons
     elements.letterHintBtn.disabled = gameOver || !Hints.canRevealLetter();
     elements.attributeHintBtn.disabled = gameOver || !Hints.canRevealAttribute();
 
-    // Update revealed attributes
     const revealedList = Hints.getRevealedAttributesList();
 
     if (revealedList.length > 0) {
@@ -438,7 +621,6 @@ const Game = (function() {
     gameOver = true;
     won = true;
 
-    // Update stats
     stats.gamesPlayed++;
     stats.wins++;
     stats.currentStreak++;
@@ -448,32 +630,46 @@ const Game = (function() {
     // Reveal silhouette
     elements.silhouette.classList.add('revealed');
 
-    // Disable input
-    disableInput();
+    // Show attribution
+    showAttribution();
 
-    // Show modal
+    disableInput();
     showResultModal();
+  }
+
+  /**
+   * Show PhyloPic attribution
+   */
+  function showAttribution() {
+    if (targetAnimal.attribution) {
+      const licenseText = targetAnimal.license && targetAnimal.license.includes('publicdomain')
+        ? 'Public Domain'
+        : 'CC Licensed';
+      elements.attribution.innerHTML =
+        `Silhouette by ${targetAnimal.attribution} via <a href="https://www.phylopic.org" target="_blank" rel="noopener">PhyloPic</a> (${licenseText})`;
+      elements.attribution.classList.remove('hidden');
+    }
   }
 
   /**
    * Disable input
    */
   function disableInput() {
-    Autocomplete.disable();
+    elements.guessInput.disabled = true;
     elements.submitGuess.disabled = true;
     elements.letterHintBtn.disabled = true;
     elements.attributeHintBtn.disabled = true;
   }
 
   /**
-   * Show result modal
+   * Show result modal with taxonomy tree
    */
   function showResultModal() {
-    elements.modalTitle.textContent = won ? '\u{1F3C6} You Got It!' : '\u{1F41F} Better Luck Tomorrow!';
+    elements.modalTitle.textContent = won ? '\u{1F3C6} You Got It!' : '\u{1F43E} Better Luck Tomorrow!';
 
-    elements.fishReveal.innerHTML = `
-      <div class="fish-name">${targetFish.name}</div>
-      <div class="scientific-name">${targetFish.scientificName}</div>
+    elements.animalReveal.innerHTML = `
+      <div class="animal-name">${targetAnimal.name}</div>
+      <div class="scientific-name">${targetAnimal.scientificName}</div>
     `;
 
     const score = calculateScore();
@@ -482,9 +678,14 @@ const Game = (function() {
 
     // Update stats display
     elements.gamesPlayed.textContent = stats.gamesPlayed;
-    elements.winPercent.textContent = `${Math.round((stats.wins / stats.gamesPlayed) * 100)}%`;
+    elements.winPercent.textContent = stats.gamesPlayed > 0
+      ? `${Math.round((stats.wins / stats.gamesPlayed) * 100)}%`
+      : '0%';
     elements.currentStreak.textContent = stats.currentStreak;
     elements.maxStreak.textContent = stats.maxStreak;
+
+    // Render taxonomy tree
+    renderTaxonomyTree();
 
     // Generate share display
     const gameResult = {
@@ -498,6 +699,64 @@ const Game = (function() {
     elements.shareResult.innerHTML = Sharing.generateShareText(gameResult).replace(/\n/g, '<br>');
 
     elements.resultModal.classList.remove('hidden');
+  }
+
+  /**
+   * Render taxonomy tree showing divergence between target and guesses
+   */
+  function renderTaxonomyTree() {
+    if (!targetAnimal.lineage || targetAnimal.lineage.length === 0) {
+      elements.taxonomyTree.classList.add('hidden');
+      return;
+    }
+
+    const targetLineage = [...targetAnimal.lineage].reverse(); // Kingdom → Family
+    const guessLineages = guesses.map(g => ({
+      name: g.animal.name,
+      lineage: [...(g.animal.lineage || [])].reverse(),
+      correct: g.correct
+    }));
+
+    // Build tree HTML
+    let html = '<strong>Taxonomy</strong><br>';
+
+    // Show target path highlighted
+    const targetPath = targetLineage.concat([targetAnimal.name]);
+    html += targetPath.map((taxon, i) => {
+      const indent = '&nbsp;'.repeat(i * 3);
+      const connector = i > 0 ? '└─ ' : '';
+      const isAnimalName = i === targetPath.length - 1;
+      const cls = isAnimalName ? 'target' : 'shared';
+      return `${indent}${connector}<span class="taxo-label ${cls}">${taxon}${isAnimalName ? ' ✓' : ''}</span>`;
+    }).join('<br>');
+
+    // Show where guesses diverged
+    if (guesses.length > 0 && !guesses[guesses.length - 1].correct) {
+      html += '<br><br><strong>Your guesses diverged at:</strong><br>';
+      const shown = new Set();
+      for (const g of guesses.slice(-3)) {
+        if (g.correct || shown.has(g.animal.name)) continue;
+        shown.add(g.animal.name);
+
+        // Find divergence point
+        const gLineage = [...(g.animal.lineage || [])].reverse();
+        let divergeIdx = 0;
+        while (divergeIdx < targetLineage.length && divergeIdx < gLineage.length &&
+               targetLineage[divergeIdx] === gLineage[divergeIdx]) {
+          divergeIdx++;
+        }
+
+        const sharedPart = targetLineage.slice(0, divergeIdx).join(' → ');
+        html += `<span class="taxo-label guess">${g.animal.name}</span>`;
+        if (sharedPart) {
+          html += ` <span style="color:#999;font-size:0.7rem">(shared: ${sharedPart})</span>`;
+        }
+        html += '<br>';
+      }
+    }
+
+    elements.taxonomyTree.innerHTML = html;
+    elements.taxonomyTree.classList.remove('hidden');
   }
 
   /**
@@ -523,33 +782,61 @@ const Game = (function() {
   }
 
   /**
+   * Difficulty management
+   */
+  function loadDifficulty() {
+    difficulty = localStorage.getItem('animaldle-difficulty') || 'normal';
+  }
+
+  function setDifficulty(newDifficulty) {
+    if (newDifficulty === difficulty) return;
+
+    difficulty = newDifficulty;
+    localStorage.setItem('animaldle-difficulty', difficulty);
+    updateDifficultyUI();
+
+    // Reload the game with new difficulty (different daily animal)
+    window.location.reload();
+  }
+
+  function updateDifficultyUI() {
+    elements.difficultyNormal.classList.toggle('active', difficulty === 'normal');
+    elements.difficultyExpert.classList.toggle('active', difficulty === 'expert');
+  }
+
+  /**
    * Save game state to localStorage
    */
   function saveGameState() {
     const todayKey = Daily.getTodayKey();
     const state = {
       guesses: guesses.map(g => ({
-        fishId: g.fish.id,
+        animalId: g.animal.id,
         comparison: g.comparison,
+        taxoDistance: g.taxoDistance,
         correct: g.correct
       })),
       hints: Hints.getState(),
       gameOver,
-      won
+      won,
+      difficulty
     };
 
-    localStorage.setItem(`fishdle-${todayKey}`, JSON.stringify(state));
+    localStorage.setItem(`animaldle-${todayKey}`, JSON.stringify(state));
   }
 
   /**
    * Load game state from localStorage
    */
   function loadGameState(todayKey) {
-    const saved = localStorage.getItem(`fishdle-${todayKey}`);
+    const saved = localStorage.getItem(`animaldle-${todayKey}`);
     if (!saved) return null;
 
     try {
-      return JSON.parse(saved);
+      const state = JSON.parse(saved);
+      // Only restore if same difficulty
+      if (state.difficulty && state.difficulty !== difficulty) return null;
+      return state;
     } catch {
       return null;
     }
@@ -559,17 +846,16 @@ const Game = (function() {
    * Restore saved game state
    */
   async function restoreGameState(savedState) {
-    // Restore guesses
     guesses = savedState.guesses.map(g => {
-      const fish = fishDatabase.find(f => f.id === g.fishId);
+      const animal = animalDatabase.find(a => a.id === g.animalId);
+      if (!animal) return null;
       return {
-        fish,
+        animal,
         comparison: g.comparison,
+        taxoDistance: g.taxoDistance || calculateTaxonomicDistance(animal, targetAnimal),
         correct: g.correct
       };
-    });
-
-    Autocomplete.setGuessedFish(guesses.map(g => g.fish.id));
+    }).filter(Boolean);
 
     // Restore hints
     Hints.loadState(savedState.hints);
@@ -585,6 +871,7 @@ const Game = (function() {
 
     if (won) {
       elements.silhouette.classList.add('revealed');
+      showAttribution();
     }
 
     if (gameOver) {
@@ -596,14 +883,14 @@ const Game = (function() {
    * Save player stats
    */
   function saveStats() {
-    localStorage.setItem('fishdle-stats', JSON.stringify(stats));
+    localStorage.setItem('animaldle-stats', JSON.stringify(stats));
   }
 
   /**
    * Load player stats
    */
   function loadStats() {
-    const saved = localStorage.getItem('fishdle-stats');
+    const saved = localStorage.getItem('animaldle-stats');
     if (saved) {
       try {
         stats = { ...stats, ...JSON.parse(saved) };
@@ -611,6 +898,27 @@ const Game = (function() {
         // Use default stats
       }
     }
+  }
+
+  /**
+   * Migrate Fishdle localStorage data to Animaldle
+   */
+  function migrateFromFishdle() {
+    // Only migrate once
+    if (localStorage.getItem('animaldle-migrated')) return;
+
+    const fishStats = localStorage.getItem('fishdle-stats');
+    if (fishStats) {
+      try {
+        const oldStats = JSON.parse(fishStats);
+        // Carry over stats
+        localStorage.setItem('animaldle-stats', JSON.stringify(oldStats));
+      } catch {
+        // ignore
+      }
+    }
+
+    localStorage.setItem('animaldle-migrated', 'true');
   }
 
   // Initialize when DOM is ready
