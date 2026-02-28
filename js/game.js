@@ -200,7 +200,7 @@ const Game = (function() {
   }
 
   /**
-   * Render animal silhouette from PhyloPic CDN
+   * Render animal silhouette from PhyloPic CDN using <img> tag (avoids CORS)
    */
   async function renderSilhouette() {
     if (!targetAnimal || !targetAnimal.svgUrl) {
@@ -208,38 +208,24 @@ const Game = (function() {
       return;
     }
 
-    // Check localStorage cache for this SVG
-    const cacheKey = `animaldle-svg-${targetAnimal.id}`;
-    const cachedSvg = localStorage.getItem(cacheKey);
-
-    if (cachedSvg) {
-      elements.silhouette.innerHTML = cachedSvg;
-      return;
-    }
-
-    try {
-      const response = await fetch(targetAnimal.svgUrl);
-      if (response.ok) {
-        let svgContent = await response.text();
-        // Ensure proper sizing
-        svgContent = svgContent.replace(/<svg/, '<svg width="200" height="200"');
-        elements.silhouette.innerHTML = svgContent;
-
-        // Cache in localStorage (only if not too large)
-        if (svgContent.length < 50000) {
-          try {
-            localStorage.setItem(cacheKey, svgContent);
-          } catch (e) {
-            // localStorage full, ignore
-          }
-        }
+    const img = document.createElement('img');
+    img.src = targetAnimal.svgUrl;
+    img.alt = 'Animal silhouette';
+    img.className = 'silhouette-img';
+    img.onerror = () => {
+      // Try thumbnail as fallback, then question mark
+      if (targetAnimal.thumbnailUrl) {
+        img.onerror = () => {
+          elements.silhouette.innerHTML = generateFallbackSilhouette();
+        };
+        img.src = targetAnimal.thumbnailUrl;
       } else {
         elements.silhouette.innerHTML = generateFallbackSilhouette();
       }
-    } catch (err) {
-      console.warn('Failed to load silhouette, using fallback:', err);
-      elements.silhouette.innerHTML = generateFallbackSilhouette();
-    }
+    };
+
+    elements.silhouette.innerHTML = '';
+    elements.silhouette.appendChild(img);
   }
 
   /**
