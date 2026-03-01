@@ -437,8 +437,13 @@ function mergeAndGenerate(images) {
       name = scientificName;
     }
 
-    // Determine class display name
-    const classRaw = img.taxonomy?.class || '';
+    // Determine class — fix Sarcopterygii for non-fish tetrapods
+    let classRaw = img.taxonomy?.class || '';
+    const inferredClass = inferClassFromOrder(img.taxonomy);
+    if (inferredClass && (classRaw === 'Sarcopterygii' || classRaw === '')) {
+      classRaw = inferredClass;
+      img.taxonomy.class = inferredClass;
+    }
     const className = getClassDisplayName(classRaw);
 
     // Determine traits with fallback inference
@@ -495,6 +500,37 @@ function mergeAndGenerate(images) {
   console.log('  Classes:', JSON.stringify(classCounts, null, 2));
 
   return animals;
+}
+
+// Orders that map to a more specific class when lineage gives Sarcopterygii
+const ORDER_TO_CLASS = {
+  // Reptilia
+  'Squamata': 'Reptilia', 'Testudines': 'Reptilia', 'Crocodylia': 'Reptilia', 'Rhynchocephalia': 'Reptilia',
+  // Amphibia
+  'Anura': 'Amphibia', 'Caudata': 'Amphibia', 'Gymnophiona': 'Amphibia',
+  // Mammalia
+  'Carnivora': 'Mammalia', 'Primates': 'Mammalia', 'Rodentia': 'Mammalia', 'Chiroptera': 'Mammalia',
+  'Cetacea': 'Mammalia', 'Artiodactyla': 'Mammalia', 'Perissodactyla': 'Mammalia', 'Proboscidea': 'Mammalia',
+  'Lagomorpha': 'Mammalia', 'Sirenia': 'Mammalia', 'Pilosa': 'Mammalia', 'Cingulata': 'Mammalia',
+  'Monotremata': 'Mammalia', 'Diprotodontia': 'Mammalia', 'Dasyuromorphia': 'Mammalia',
+  'Eulipotyphla': 'Mammalia', 'Pholidota': 'Mammalia', 'Dermoptera': 'Mammalia',
+  'Scandentia': 'Mammalia', 'Tubulidentata': 'Mammalia', 'Hyracoidea': 'Mammalia',
+  'Macroscelidea': 'Mammalia', 'Afrosoricida': 'Mammalia', 'Didelphimorphia': 'Mammalia',
+  // Aves
+  'Passeriformes': 'Aves', 'Accipitriformes': 'Aves', 'Falconiformes': 'Aves',
+  'Strigiformes': 'Aves', 'Psittaciformes': 'Aves', 'Columbiformes': 'Aves',
+  'Galliformes': 'Aves', 'Anseriformes': 'Aves', 'Charadriiformes': 'Aves',
+  'Pelecaniformes': 'Aves', 'Procellariiformes': 'Aves', 'Sphenisciformes': 'Aves',
+  'Coraciiformes': 'Aves', 'Piciformes': 'Aves', 'Apodiformes': 'Aves',
+  'Cuculiformes': 'Aves', 'Gruiformes': 'Aves', 'Caprimulgiformes': 'Aves',
+  'Trogoniformes': 'Aves', 'Bucerotiformes': 'Aves', 'Casuariiformes': 'Aves',
+  'Struthioniformes': 'Aves', 'Rheiformes': 'Aves', 'Tinamiformes': 'Aves', 'Apterygiformes': 'Aves'
+};
+
+function inferClassFromOrder(taxonomy) {
+  const order = taxonomy?.order;
+  if (!order) return null;
+  return ORDER_TO_CLASS[order] || null;
 }
 
 function getClassDisplayName(raw) {
