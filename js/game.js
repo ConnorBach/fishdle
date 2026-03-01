@@ -127,6 +127,7 @@ const Game = (function() {
       modalTitle: document.getElementById('modalTitle'),
       animalReveal: document.getElementById('animalReveal'),
       taxonomyTree: document.getElementById('taxonomyTree'),
+      funFacts: document.getElementById('funFacts'),
       finalScore: document.getElementById('finalScore'),
       totalGuesses: document.getElementById('totalGuesses'),
       gamesPlayed: document.getElementById('gamesPlayed'),
@@ -138,6 +139,7 @@ const Game = (function() {
       shareConfirm: document.getElementById('shareConfirm'),
       settingsBtn: document.getElementById('settingsBtn'),
       settingsModal: document.getElementById('settingsModal'),
+      difficultyBeginner: document.getElementById('difficultyBeginner'),
       difficultyNormal: document.getElementById('difficultyNormal'),
       difficultyExpert: document.getElementById('difficultyExpert'),
       closeSettings: document.getElementById('closeSettings')
@@ -183,6 +185,7 @@ const Game = (function() {
         elements.settingsModal.classList.add('hidden');
       }
     });
+    elements.difficultyBeginner.addEventListener('click', () => setDifficulty('beginner'));
     elements.difficultyNormal.addEventListener('click', () => setDifficulty('normal'));
     elements.difficultyExpert.addEventListener('click', () => setDifficulty('expert'));
 
@@ -244,14 +247,30 @@ const Game = (function() {
    */
   function updateNameBlanks() {
     const display = Hints.getNameDisplay();
-    elements.nameBlanks.innerHTML = display.map(item => {
+
+    // Group letters into words (split on space items)
+    const words = [];
+    let currentWord = [];
+    for (const item of display) {
       if (item.type === 'space') {
-        return '<span class="letter-blank space"></span>';
-      } else if (item.type === 'revealed') {
-        return `<span class="letter-blank revealed">${item.letter}</span>`;
+        if (currentWord.length > 0) {
+          words.push(currentWord);
+          currentWord = [];
+        }
       } else {
-        return '<span class="letter-blank">_</span>';
+        currentWord.push(item);
       }
+    }
+    if (currentWord.length > 0) words.push(currentWord);
+
+    elements.nameBlanks.innerHTML = words.map(word => {
+      const letters = word.map(item => {
+        if (item.type === 'revealed') {
+          return `<span class="letter-blank revealed">${item.letter}</span>`;
+        }
+        return '<span class="letter-blank">_</span>';
+      }).join('');
+      return `<span class="word-group">${letters}</span>`;
     }).join('');
   }
 
@@ -291,7 +310,13 @@ const Game = (function() {
       return;
     }
 
-    const guessedAnimal = matchResult;
+    let guessedAnimal = matchResult;
+
+    // If fuzzy match returned a duplicate entry, swap to the target if same species
+    if (guessedAnimal.id !== targetAnimal.id &&
+        guessedAnimal.scientificName === targetAnimal.scientificName) {
+      guessedAnimal = targetAnimal;
+    }
 
     // Check if already guessed
     if (guesses.some(g => g.animal.id === guessedAnimal.id)) {
@@ -673,6 +698,21 @@ const Game = (function() {
     // Render taxonomy tree
     renderTaxonomyTree();
 
+    // Show fun facts on win
+    if (won) {
+      const facts = generateFunFacts(targetAnimal);
+      if (facts.length > 0) {
+        elements.funFacts.innerHTML =
+          '<strong>Fun Facts</strong>' +
+          '<ul class="facts-list">' +
+          facts.map(f => `<li>${f}</li>`).join('') +
+          '</ul>';
+        elements.funFacts.classList.remove('hidden');
+      }
+    } else {
+      elements.funFacts.classList.add('hidden');
+    }
+
     // Generate share display
     const gameResult = {
       gameNumber,
@@ -746,6 +786,43 @@ const Game = (function() {
   }
 
   /**
+   * Generate fun facts from animal data
+   */
+  function generateFunFacts(animal) {
+    const facts = [];
+    const attrs = animal.attributes || {};
+
+    // Fact 1: Classification + habitat
+    if (attrs.class && attrs.habitat) {
+      const habitatDesc = attrs.habitat === 'marine' ? 'in the ocean' :
+                          attrs.habitat === 'freshwater' ? 'in freshwater habitats' :
+                          attrs.habitat === 'terrestrial' ? 'on land' :
+                          attrs.habitat === 'arboreal' ? 'in trees' :
+                          `in ${attrs.habitat} environments`;
+      facts.push(`This ${attrs.class.toLowerCase()} lives ${habitatDesc}.`);
+    }
+
+    // Fact 2: Diet
+    if (attrs.diet) {
+      const dietDesc = attrs.diet === 'carnivore' ? 'a meat-eater (carnivore)' :
+                       attrs.diet === 'herbivore' ? 'a plant-eater (herbivore)' :
+                       attrs.diet === 'omnivore' ? 'an omnivore, eating both plants and animals' :
+                       attrs.diet === 'insectivore' ? 'an insectivore, feeding mainly on insects' :
+                       `a ${attrs.diet}`;
+      facts.push(`It is ${dietDesc}.`);
+    }
+
+    // Fact 3: Taxonomy lineage
+    if (animal.lineage && animal.lineage.length > 0) {
+      const lineageReversed = [...animal.lineage].reverse();
+      const topTaxa = lineageReversed.slice(0, 3).join(' > ');
+      facts.push(`Taxonomy: ${topTaxa}.`);
+    }
+
+    return facts;
+  }
+
+  /**
    * Handle share button click
    */
   async function handleShare() {
@@ -786,6 +863,7 @@ const Game = (function() {
   }
 
   function updateDifficultyUI() {
+    elements.difficultyBeginner.classList.toggle('active', difficulty === 'beginner');
     elements.difficultyNormal.classList.toggle('active', difficulty === 'normal');
     elements.difficultyExpert.classList.toggle('active', difficulty === 'expert');
   }

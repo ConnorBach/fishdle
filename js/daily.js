@@ -51,6 +51,9 @@ const Daily = (function() {
     let pool;
     if (difficulty === 'expert') {
       pool = animalDatabase;
+    } else if (difficulty === 'beginner') {
+      // Beginner: easy only
+      pool = animalDatabase.filter(a => a.difficulty === 'easy');
     } else {
       // Normal: easy + medium only
       pool = animalDatabase.filter(a => a.difficulty === 'easy' || a.difficulty === 'medium');
@@ -60,7 +63,8 @@ const Daily = (function() {
 
     // Use different seed offset for different difficulty modes so they get different animals
     const baseSeed = dateToSeed(date);
-    const seed = difficulty === 'expert' ? baseSeed + 7919 : baseSeed;
+    const seed = difficulty === 'expert' ? baseSeed + 7919 :
+                 difficulty === 'beginner' ? baseSeed + 13397 : baseSeed;
     const rng = seededRandom(seed);
     const index = Math.floor(rng() * pool.length);
 

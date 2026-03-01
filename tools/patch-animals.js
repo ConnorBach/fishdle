@@ -89,6 +89,13 @@ const CLASS_DISPLAY = {
   'Pycnogonida': 'Arachnid'
 };
 
+// ── Sarcopterygii genera that are actually fish ──────────────────
+const SARCOPTERYGII_FISH_GENERA = new Set([
+  'Latimeria', 'Neoceratodus', 'Protopterus', 'Lepidosiren',
+  'Holoptychius', 'Chinlea', 'Macropoma', 'Eusthenopteron',
+  'Panderichthys', 'Tiktaalik'
+]);
+
 // ── Helpers ────────────────────────────────────────────────────────
 
 function getOrder(animal) {
@@ -172,28 +179,58 @@ for (const animal of animals) {
     }
   }
 
+  // ── Fix 1b: Sarcopterygii without recognized order ─────────────
+  // If class is "Fish", lineage includes Sarcopterygii, no recognized order,
+  // and genus is NOT in the fish allowlist → reclassify as Reptile/terrestrial
+  let fixedBySarco = false;
+  if (!order && animal.attributes.class === 'Fish' &&
+      (animal.lineage || []).includes('Sarcopterygii')) {
+    const genus = animal.scientificName ? animal.scientificName.split(' ')[0] : '';
+    if (!SARCOPTERYGII_FISH_GENERA.has(genus)) {
+      fixedBySarco = true;
+      const oldClass = animal.attributes.class;
+      animal.attributes.class = 'Reptile';
+
+      // Fix lineage array
+      const lineageIdx = (animal.lineage || []).indexOf('Sarcopterygii');
+      if (lineageIdx !== -1) {
+        animal.lineage[lineageIdx] = 'Reptilia';
+        changes.lineageFixed.push(`${animal.scientificName}: Sarcopterygii → Reptilia`);
+      }
+
+      changes.classFixed.push(`${animal.scientificName}: ${oldClass} → Reptile`);
+
+      // Also set habitat to terrestrial
+      if (animal.attributes.habitat !== 'terrestrial') {
+        const oldHabitat = animal.attributes.habitat;
+        animal.attributes.habitat = 'terrestrial';
+        changes.habitatFixed.push(`${animal.scientificName}: ${oldHabitat} → terrestrial`);
+      }
+    }
+  }
+
   // ── Fix 2: Re-infer traits using updated trait-inference.json ──
   // Re-derive the correct class for trait inference
   const effectiveClass = order && ORDER_TO_CLASS[order] ? ORDER_TO_CLASS[order] : lineageClass;
 
-  // Re-infer habitat
-  const newHabitat = inferTrait('habitat', family, order, effectiveClass);
+  // Re-infer habitat (skip if Fix 1b already set it to terrestrial)
+  const newHabitat = fixedBySarco ? null : inferTrait('habitat', family, order, effectiveClass);
   if (newHabitat && animal.attributes.habitat !== newHabitat) {
     const oldHabitat = animal.attributes.habitat;
     animal.attributes.habitat = newHabitat;
     changes.habitatFixed.push(`${animal.scientificName}: ${oldHabitat} → ${newHabitat}`);
   }
 
-  // Re-infer diet
-  const newDiet = inferTrait('diet', family, order, effectiveClass);
+  // Re-infer diet (skip if Fix 1b already handled this animal)
+  const newDiet = fixedBySarco ? null : inferTrait('diet', family, order, effectiveClass);
   if (newDiet && animal.attributes.diet !== newDiet) {
     const oldDiet = animal.attributes.diet;
     animal.attributes.diet = newDiet;
     changes.dietFixed.push(`${animal.scientificName}: ${oldDiet} → ${newDiet}`);
   }
 
-  // Re-infer size
-  const newSize = inferTrait('size', family, order, effectiveClass);
+  // Re-infer size (skip if Fix 1b already handled this animal)
+  const newSize = fixedBySarco ? null : inferTrait('size', family, order, effectiveClass);
   if (newSize && animal.attributes.size !== newSize) {
     const oldSize = animal.attributes.size;
     animal.attributes.size = newSize;

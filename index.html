@@ -90,9 +90,10 @@
           <div class="setting-row">
             <div class="setting-label">
               <strong>Difficulty</strong>
-              <p class="setting-description">Expert mode includes all ~11,950 organisms</p>
+              <p class="setting-description">Beginner: easy animals only. Normal: easy + medium. Expert: all ~11,950 organisms.</p>
             </div>
             <div class="setting-control">
+              <button id="difficultyBeginner" class="difficulty-btn">Beginner</button>
               <button id="difficultyNormal" class="difficulty-btn active">Normal</button>
               <button id="difficultyExpert" class="difficulty-btn">Expert</button>
             </div>
@@ -113,6 +114,9 @@
 
           <!-- Taxonomy Tree -->
           <div id="taxonomyTree" class="taxonomy-tree hidden"></div>
+
+          <!-- Fun Facts (shown on win) -->
+          <div id="funFacts" class="fun-facts hidden"></div>
 
           <div class="result-stats">
             <div class="stat">

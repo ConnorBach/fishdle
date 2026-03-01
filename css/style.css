@@ -156,8 +156,14 @@ header h1 {
 .name-blanks {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 16px;
   flex-wrap: wrap;
+}
+
+.word-group {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 4px;
 }
 
 .letter-blank {
@@ -176,11 +182,6 @@ header h1 {
 .letter-blank.revealed {
   color: var(--success-color);
   border-bottom-color: var(--success-color);
-}
-
-.letter-blank.space {
-  width: 16px;
-  border-bottom: none;
 }
 
 /* Score Display */
@@ -611,6 +612,41 @@ header h1 {
 
 .taxonomy-tree .taxo-label.shared {
   color: var(--text-light);
+}
+
+/* Fun Facts */
+.fun-facts {
+  background: var(--success-bg);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.fun-facts strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--success-color);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.facts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.facts-list li {
+  padding: 8px 0;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.facts-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 /* Modal */
