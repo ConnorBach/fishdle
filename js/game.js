@@ -314,7 +314,8 @@ const Game = (function() {
 
     // If fuzzy match returned a duplicate entry, swap to the target if same species
     if (guessedAnimal.id !== targetAnimal.id &&
-        guessedAnimal.scientificName === targetAnimal.scientificName) {
+        (guessedAnimal.scientificName === targetAnimal.scientificName ||
+         guessedAnimal.name.toLowerCase() === targetAnimal.name.toLowerCase())) {
       guessedAnimal = targetAnimal;
     }
 
@@ -368,25 +369,22 @@ const Game = (function() {
   function fuzzyMatchAnimal(input) {
     const normalized = input.toLowerCase().trim();
 
-    // Exact match on common name
+    // 1. Exact match on name
     const exactName = animalDatabase.find(a => a.name.toLowerCase() === normalized);
     if (exactName) return exactName;
 
-    // Exact match on scientific name
-    const exactScientific = animalDatabase.find(a => a.scientificName.toLowerCase() === normalized);
-    if (exactScientific) return exactScientific;
+    // 2. Exact match on scientific name
+    const exactSci = animalDatabase.find(a => a.scientificName.toLowerCase() === normalized);
+    if (exactSci) return exactSci;
 
-    // StartsWith on common name
-    const startsWithName = animalDatabase.find(a => a.name.toLowerCase().startsWith(normalized) && normalized.length >= 3);
-    if (startsWithName) return startsWithName;
+    // 3. StartsWith on name (min 3 chars)
+    if (normalized.length >= 3) {
+      const sw = animalDatabase.find(a => a.name.toLowerCase().startsWith(normalized));
+      if (sw) return sw;
+    }
 
-    // StartsWith on scientific name
-    const startsWithScientific = animalDatabase.find(a => a.scientificName.toLowerCase().startsWith(normalized) && normalized.length >= 3);
-    if (startsWithScientific) return startsWithScientific;
-
-    // Levenshtein distance ≤ 2 on common name
-    let bestMatch = null;
-    let bestDist = 3;
+    // 4. Levenshtein ≤ 2 on name
+    let bestMatch = null, bestDist = 3;
     for (const animal of animalDatabase) {
       const dist = levenshteinDistance(normalized, animal.name.toLowerCase());
       if (dist < bestDist) {
@@ -394,9 +392,7 @@ const Game = (function() {
         bestMatch = animal;
       }
     }
-    if (bestMatch) return bestMatch;
-
-    return null;
+    return bestMatch;
   }
 
   /**
@@ -790,33 +786,23 @@ const Game = (function() {
    */
   function generateFunFacts(animal) {
     const facts = [];
-    const attrs = animal.attributes || {};
 
-    // Fact 1: Classification + habitat
-    if (attrs.class && attrs.habitat) {
-      const habitatDesc = attrs.habitat === 'marine' ? 'in the ocean' :
-                          attrs.habitat === 'freshwater' ? 'in freshwater habitats' :
-                          attrs.habitat === 'terrestrial' ? 'on land' :
-                          attrs.habitat === 'arboreal' ? 'in trees' :
-                          `in ${attrs.habitat} environments`;
-      facts.push(`This ${attrs.class.toLowerCase()} lives ${habitatDesc}.`);
+    // Primary: Wikipedia summary (species-specific, interesting)
+    if (animal.funFact) {
+      facts.push(animal.funFact);
     }
 
-    // Fact 2: Diet
-    if (attrs.diet) {
-      const dietDesc = attrs.diet === 'carnivore' ? 'a meat-eater (carnivore)' :
-                       attrs.diet === 'herbivore' ? 'a plant-eater (herbivore)' :
-                       attrs.diet === 'omnivore' ? 'an omnivore, eating both plants and animals' :
-                       attrs.diet === 'insectivore' ? 'an insectivore, feeding mainly on insects' :
-                       `a ${attrs.diet}`;
-      facts.push(`It is ${dietDesc}.`);
-    }
-
-    // Fact 3: Taxonomy lineage
-    if (animal.lineage && animal.lineage.length > 0) {
-      const lineageReversed = [...animal.lineage].reverse();
-      const topTaxa = lineageReversed.slice(0, 3).join(' > ');
-      facts.push(`Taxonomy: ${topTaxa}.`);
+    // Fallback: basic template facts if no Wikipedia data
+    if (facts.length === 0) {
+      const attrs = animal.attributes || {};
+      if (attrs.class && attrs.habitat) {
+        const hab = { marine: 'the ocean', freshwater: 'freshwater habitats',
+                      terrestrial: 'land', arboreal: 'trees' }[attrs.habitat] || attrs.habitat;
+        facts.push(`This ${attrs.class.toLowerCase()} lives in ${hab}.`);
+      }
+      if (animal.name !== animal.scientificName) {
+        facts.push(`Its scientific name is ${animal.scientificName}.`);
+      }
     }
 
     return facts;

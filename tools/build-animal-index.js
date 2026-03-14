@@ -323,12 +323,13 @@ async function fetchWikidataTraits(images) {
       const valuesStr = names.map(n => `"${n.replace(/"/g, '\\"')}"`).join(' ');
 
       const query = `
-        SELECT ?item ?itemLabel ?taxonName ?mass ?habitatLabel ?dietLabel WHERE {
+        SELECT ?item ?itemLabel ?taxonName ?mass ?habitatLabel ?dietLabel ?commonName WHERE {
           VALUES ?taxonName { ${valuesStr} }
           ?item wdt:P225 ?taxonName .
           OPTIONAL { ?item wdt:P2067 ?mass . }
           OPTIONAL { ?item wdt:P2974 ?habitat . }
           OPTIONAL { ?item wdt:P1034 ?diet . }
+          OPTIONAL { ?item wdt:P1843 ?commonName . FILTER(LANG(?commonName) = "en") }
           SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
         }
       `;
@@ -367,7 +368,9 @@ async function fetchWikidataTraits(images) {
       if (b.dietLabel?.value) {
         traits.diet = normalizeDiet(b.dietLabel.value);
       }
-      if (b.itemLabel?.value) {
+      if (b.commonName?.value) {
+        traits.commonName = b.commonName.value;
+      } else if (b.itemLabel?.value && b.itemLabel.value !== b.taxonName?.value) {
         traits.commonName = b.itemLabel.value;
       }
 
@@ -414,6 +417,46 @@ function normalizeDiet(raw) {
   if (lower.includes('photosynth') || lower.includes('autotroph')) return 'photosynthetic';
   if (lower.includes('decompos') || lower.includes('saprotroph') || lower.includes('detritivore')) return 'decomposer';
   return 'omnivore';
+}
+
+// ── Phase 4b: Fetch Wikipedia summaries ─────────────────────────────
+const WIKIPEDIA_CACHE = path.join(CACHE_DIR, 'wikipedia');
+
+async function fetchWikipediaSummaries(images) {
+  ensureDir(WIKIPEDIA_CACHE);
+  console.log('\n📖 Phase 4b: Fetching Wikipedia summaries...');
+
+  for (let i = 0; i < images.length; i++) {
+    const img = images[i];
+    const title = img.title;
+    if (!title) { img.wikipediaSummary = ''; continue; }
+
+    const cacheFile = path.join(WIKIPEDIA_CACHE, `${title.replace(/\//g, '_')}.json`);
+    let cached = readCache(cacheFile);
+
+    if (!cached) {
+      // Try scientific name first, then common name
+      const queryNames = [title, img.wikidataTraits?.commonName].filter(Boolean);
+      for (const queryName of queryNames) {
+        try {
+          const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(queryName)}`;
+          const raw = await httpsGet(url);
+          cached = JSON.parse(raw);
+          if (cached.extract) break;
+        } catch (e) { /* try next */ }
+      }
+      if (cached) writeCache(cacheFile, cached);
+      await sleep(100);
+    }
+
+    img.wikipediaSummary = cached?.extract || '';
+    if ((i + 1) % 200 === 0 || i === images.length - 1) {
+      progress(i + 1, images.length, 'Wikipedia summaries');
+    }
+  }
+
+  console.log(`  Summaries found: ${images.filter(i => i.wikipediaSummary).length}`);
+  return images;
 }
 
 // ── Phase 5: Merge + generate animals.json ──────────────────────────
@@ -479,6 +522,7 @@ function mergeAndGenerate(images) {
       },
       lineage,
       difficulty,
+      funFact: img.wikipediaSummary || '',
       attribution: img.contributor,
       license: img.license
     });
@@ -610,19 +654,17 @@ function buildLineageArray(img) {
 }
 
 function getDifficulty(name, scientificName) {
-  // Check if it's in the easy list
-  const easyList = COMMON_ANIMALS.easy_list;
   const nameLower = name.toLowerCase();
+  const easyList = COMMON_ANIMALS.easy_list;
+
+  // Easy: in the curated easy_list (~1000 famous animals + their variants)
   for (const easy of easyList) {
     if (nameLower.includes(easy.toLowerCase()) || easy.toLowerCase().includes(nameLower)) {
       return 'easy';
     }
   }
 
-  // Check if we have a common name different from scientific name
-  if (name !== scientificName && !name.includes(' ')) {
-    return 'medium';
-  }
+  // Medium: has a common name different from scientific name
   if (name !== scientificName) {
     return 'medium';
   }
@@ -651,6 +693,9 @@ async function main() {
 
     // Phase 4: Fetch Wikidata traits
     await fetchWikidataTraits(images);
+
+    // Phase 4b: Fetch Wikipedia summaries
+    await fetchWikipediaSummaries(images);
 
     // Phase 5: Merge and generate
     const animals = mergeAndGenerate(images);
