@@ -7,6 +7,7 @@
  *   - Keep curated prehistoric exceptions (use genus as display name)
  *   - Remove bad names (Q-prefixed Wikidata IDs, lab codes)
  *   - Deduplicate by name (keep entry with best funFact)
+ *   - Re-assign difficulty with whole-word matching
  */
 
 const fs = require('fs');
@@ -19,7 +20,37 @@ const COMMON_ANIMALS = JSON.parse(
 );
 
 const prehistoric = COMMON_ANIMALS.prehistoric_exceptions || {};
-const easyList = (COMMON_ANIMALS.easy_list || []).map(e => e.toLowerCase());
+const easyList = COMMON_ANIMALS.easy_list || [];
+
+const HARD_CLASSES = new Set([
+  'Arachnid', 'Myriapod', 'Echinoderm', 'Cnidarian',
+  'Mollusk', 'Crustacean', 'Fungus', 'Sponge', 'Worm',
+  'Ostracoda', 'Remipedia', 'Scaphopoda', 'Polyplacophora'
+]);
+
+function isEasy(name) {
+  for (const easy of easyList) {
+    const escaped = easy.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp('\\b' + escaped + '\\b', 'i');
+    if (regex.test(name)) return true;
+  }
+  return false;
+}
+
+function isHard(name, className) {
+  const words = name.split(/[\s,;]+/).filter(Boolean).length;
+  if (/^[A-Z][a-z]+\s[a-z]+(us|is|ae|ii|ei|um|a|orum|arum)$/.test(name)) return true;
+  if (/[()]/.test(name)) return true;
+  if (HARD_CLASSES.has(className)) return true;
+  if (words >= 3) return true;
+  return false;
+}
+
+function getDifficulty(name, className) {
+  if (isEasy(name)) return 'easy';
+  if (isHard(name, className)) return 'hard';
+  return 'medium';
+}
 
 const animals = JSON.parse(fs.readFileSync(ANIMALS_FILE, 'utf8'));
 console.log(`Loaded ${animals.length} animals`);
@@ -52,10 +83,6 @@ for (const animal of animals) {
   const genus = animal.scientificName.split(' ')[0];
   if (prehistoric[genus]) {
     animal.name = prehistoric[genus];
-    // Set difficulty to easy if in easy_list
-    if (easyList.includes(animal.name.toLowerCase())) {
-      animal.difficulty = 'easy';
-    }
     filtered.push(animal);
     prehistoricKept++;
     continue;
@@ -82,7 +109,6 @@ for (const animal of filtered) {
     seen.set(key, animal);
   } else {
     const existing = seen.get(key);
-    // Prefer entry with funFact
     if (!existing.funFact && animal.funFact) {
       seen.set(key, animal);
     } else if (animal.funFact && existing.funFact && animal.funFact.length > existing.funFact.length) {
@@ -93,12 +119,17 @@ for (const animal of filtered) {
 }
 
 const deduped = Array.from(seen.values());
+
+// Phase 3: Re-assign difficulty
+for (const animal of deduped) {
+  animal.difficulty = getDifficulty(animal.name, animal.attributes.class);
+}
+
 deduped.sort((a, b) => a.id.localeCompare(b.id));
 
 console.log(`  Removed duplicates: ${removed.dedup}`);
 console.log(`  Final count: ${deduped.length}`);
 
-// Stats
 const easy = deduped.filter(a => a.difficulty === 'easy').length;
 const medium = deduped.filter(a => a.difficulty === 'medium').length;
 const hard = deduped.filter(a => a.difficulty === 'hard').length;
@@ -106,6 +137,10 @@ console.log(`\nDifficulty breakdown:`);
 console.log(`  Easy: ${easy}`);
 console.log(`  Medium: ${medium}`);
 console.log(`  Hard: ${hard}`);
+console.log(`\nGame mode pools:`);
+console.log(`  Beginner (easy): ${easy}`);
+console.log(`  Normal (easy+medium): ${easy + medium}`);
+console.log(`  Expert (all): ${deduped.length}`);
 
 // Write output
 fs.writeFileSync(ANIMALS_FILE, JSON.stringify(deduped, null, 2));

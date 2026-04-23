@@ -516,7 +516,7 @@ function mergeAndGenerate(images) {
     const lineage = buildLineageArray(img);
 
     // Determine difficulty
-    const difficulty = getDifficulty(name, scientificName);
+    const difficulty = getDifficulty(name, scientificName, className);
 
     animals.push({
       id: img.uuid,
@@ -682,23 +682,47 @@ function buildLineageArray(img) {
   return lineage;
 }
 
-function getDifficulty(name, scientificName) {
-  const nameLower = name.toLowerCase();
+function getDifficulty(name, scientificName, className) {
   const easyList = COMMON_ANIMALS.easy_list;
 
-  // Easy: in the curated easy_list (~1000 famous animals + their variants)
+  // Easy: whole-word match against curated easy_list
   for (const easy of easyList) {
-    if (nameLower.includes(easy.toLowerCase()) || easy.toLowerCase().includes(nameLower)) {
+    const escaped = easy.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp('\\b' + escaped + '\\b', 'i');
+    if (regex.test(name)) {
       return 'easy';
     }
   }
 
-  // Medium: has a common name different from scientific name
-  if (name !== scientificName) {
-    return 'medium';
+  // Hard: obscure animals only enthusiasts would know
+  if (isHardAnimal(name, className)) {
+    return 'hard';
   }
 
-  return 'hard';
+  // Medium: recognizable animals with common names
+  return 'medium';
+}
+
+const HARD_CLASSES = new Set([
+  'Arachnid', 'Myriapod', 'Echinoderm', 'Cnidarian',
+  'Mollusk', 'Crustacean', 'Fungus', 'Sponge', 'Worm',
+  'Ostracoda', 'Remipedia', 'Scaphopoda', 'Polyplacophora'
+]);
+
+function isHardAnimal(name, className) {
+  const words = name.split(/[\s,;]+/).filter(Boolean).length;
+
+  // Latin-looking names or taxonomic notes
+  if (/^[A-Z][a-z]+\s[a-z]+(us|is|ae|ii|ei|um|a|orum|arum)$/.test(name)) return true;
+  if (/[()]/.test(name)) return true;
+
+  // Obscure classes
+  if (HARD_CLASSES.has(className)) return true;
+
+  // 3+ word names (very specific species)
+  if (words >= 3) return true;
+
+  return false;
 }
 
 // ── Main ────────────────────────────────────────────────────────────
