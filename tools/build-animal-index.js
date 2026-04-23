@@ -474,11 +474,15 @@ function mergeAndGenerate(images) {
                COMMON_ANIMALS.common_names[scientificName] ||
                scientificName;
 
-    // If name equals scientific name, try to clean it up
-    if (name === scientificName && scientificName.includes(' ')) {
-      // Use genus + species format as display name
-      name = scientificName;
+    // Check prehistoric exceptions (use genus as display name)
+    const genus = scientificName.split(' ')[0];
+    const prehistoric = COMMON_ANIMALS.prehistoric_exceptions || {};
+    if (name === scientificName && prehistoric[genus]) {
+      name = prehistoric[genus];
     }
+
+    // Skip bad names (Wikidata IDs, lab codes)
+    if (/^Q\d+/.test(name) || /^L\d+-S\d+/.test(name)) continue;
 
     // Determine class — fix Sarcopterygii for non-fish tetrapods
     let classRaw = img.taxonomy?.class || '';
@@ -488,6 +492,12 @@ function mergeAndGenerate(images) {
       img.taxonomy.class = inferredClass;
     }
     const className = getClassDisplayName(classRaw);
+
+    // Skip plants
+    if (className === 'Plant') continue;
+
+    // Skip Latin-only names (no common name and no prehistoric exception)
+    if (name === scientificName) continue;
 
     // Determine traits with fallback inference
     const habitat = img.wikidataTraits?.habitat ||
@@ -531,19 +541,38 @@ function mergeAndGenerate(images) {
   // Sort by UUID for deterministic seeded random
   animals.sort((a, b) => a.id.localeCompare(b.id));
 
-  console.log(`  Total animals: ${animals.length}`);
-  console.log(`  Easy: ${animals.filter(a => a.difficulty === 'easy').length}`);
-  console.log(`  Medium: ${animals.filter(a => a.difficulty === 'medium').length}`);
-  console.log(`  Hard: ${animals.filter(a => a.difficulty === 'hard').length}`);
+  // Deduplicate by name (keep entry with best funFact)
+  const seen = new Map();
+  for (const animal of animals) {
+    const key = animal.name.toLowerCase();
+    if (!seen.has(key)) {
+      seen.set(key, animal);
+    } else {
+      const existing = seen.get(key);
+      if (!existing.funFact && animal.funFact) {
+        seen.set(key, animal);
+      } else if (animal.funFact && existing.funFact && animal.funFact.length > existing.funFact.length) {
+        seen.set(key, animal);
+      }
+    }
+  }
+  const dedupedAnimals = Array.from(seen.values());
+  dedupedAnimals.sort((a, b) => a.id.localeCompare(b.id));
+
+  console.log(`  Before dedup: ${animals.length}`);
+  console.log(`  Total animals: ${dedupedAnimals.length}`);
+  console.log(`  Easy: ${dedupedAnimals.filter(a => a.difficulty === 'easy').length}`);
+  console.log(`  Medium: ${dedupedAnimals.filter(a => a.difficulty === 'medium').length}`);
+  console.log(`  Hard: ${dedupedAnimals.filter(a => a.difficulty === 'hard').length}`);
 
   // Count by class
   const classCounts = {};
-  for (const a of animals) {
+  for (const a of dedupedAnimals) {
     classCounts[a.attributes.class] = (classCounts[a.attributes.class] || 0) + 1;
   }
   console.log('  Classes:', JSON.stringify(classCounts, null, 2));
 
-  return animals;
+  return dedupedAnimals;
 }
 
 // Orders that map to a more specific class when lineage gives Sarcopterygii

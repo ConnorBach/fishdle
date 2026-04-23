@@ -29,7 +29,6 @@ const Game = (function() {
     'Echinoderm': 'Echinodermata',
     'Worm': 'Annelida',
     'Sponge': 'Porifera',
-    'Plant': 'Plantae',
     'Fungus': 'Fungi'
   };
 
@@ -676,7 +675,6 @@ const Game = (function() {
 
     elements.animalReveal.innerHTML = `
       <div class="animal-name">${targetAnimal.name}</div>
-      <div class="scientific-name">${targetAnimal.scientificName}</div>
     `;
 
     const score = calculateScore();
